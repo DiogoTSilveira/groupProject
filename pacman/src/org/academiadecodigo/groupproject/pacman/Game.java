@@ -6,6 +6,7 @@ package org.academiadecodigo.groupproject.pacman;
 
 import org.academiadecodigo.groupproject.pacman.gameobjects.Ghost;
 import org.academiadecodigo.groupproject.pacman.gameobjects.Player;
+import org.academiadecodigo.groupproject.pacman.gameobjects.WallFactory;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 public class Game {
@@ -31,6 +32,7 @@ public class Game {
     public void init(){
         this.rectangle = new Rectangle(PADDING, PADDING, cols * cellSize, rows * cellSize);
         rectangle.draw();
+        WallFactory.createGameField();
 
     }
 
