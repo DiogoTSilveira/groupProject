@@ -23,6 +23,6 @@ public class Ghost extends GameObject{
     * until he faces an obstacle ahead of him. Uppon hitting a wall for example, the Ghost will not return from where he came.
     * */
     public void move(){
-        direction.getRandomDirection();
+        //direction.getRandomDirection();
     }
 }

@@ -31,14 +31,21 @@ public class KeyboardListener implements KeyboardHandler {
         right.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         left.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
 
+        up.setKey(KeyboardEvent.KEY_UP);
+        down.setKey(KeyboardEvent.KEY_DOWN);
+        right.setKey(KeyboardEvent.KEY_RIGHT);
+        left.setKey(KeyboardEvent.KEY_LEFT);
 
-
+        keyboard.addEventListener(up);
+        keyboard.addEventListener(down);
+        keyboard.addEventListener(right);
+        keyboard.addEventListener(left);
 
     }
 
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
-
+        movable.translate(10, 20);
     }
 
     @Override

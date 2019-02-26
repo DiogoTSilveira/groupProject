@@ -22,6 +22,7 @@ public class Game {
 
 
     public Game(int cols, int rows){
+        player = new Player();
         this.cols = cols;
         this.rows = rows;
         cellSize = 10;
@@ -31,6 +32,7 @@ public class Game {
     public void init(){
         this.rectangle = new Rectangle(PADDING, PADDING, cols * cellSize, rows * cellSize);
         rectangle.draw();
+        player.move();
 
     }
 
