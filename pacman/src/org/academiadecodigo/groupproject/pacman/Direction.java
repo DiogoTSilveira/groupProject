@@ -11,9 +11,15 @@ public enum Direction {
     RIGHT;
 
 
-    public Direction getRandomDirection() {
-        //return Direction.values()[(int) (Math.random() * Direction.values().length)];
 
+
+    public static Direction randomDirection(){
+
+        return Direction.values()[(int) (Math.random() * Direction.values().length)];
+    }
+
+
+    public  Direction changeDirection() {
 
         switch (this) {
             case UP:
