@@ -23,6 +23,7 @@ public class Game {
 
 
     public Game(int cols, int rows){
+        player = new Player();
         this.cols = cols;
         this.rows = rows;
         cellSize = 10;
