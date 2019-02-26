@@ -15,10 +15,14 @@ public class Ghost extends GameObject{
     private CollisionDetector collisionDetector;
 
     public Ghost(){
-
     }
 
-    public void move(){
 
+    /*
+    * The Ghost will get a random direction from Direction. This Ghost will not be able to change direction
+    * until he faces an obstacle ahead of him. Uppon hitting a wall for example, the Ghost will not return from where he came.
+    * */
+    public void move(){
+        direction.getRandomDirection();
     }
 }
