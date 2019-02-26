@@ -34,13 +34,13 @@ public class CollisionDetector {
     }
             public void collision(){
 
-            if (player.getpos().equals(ghost.getpos())){ //Campare the position of the plyer with Ghost
+           /* if (player.getpos().equals(ghost.getpos())){ //Campare the position of the plyer with Ghost
                 player.isDead;// if position of player and ghost are te same player dies. END GAME
 
             }else{  //in case the position is different both keep moving
                 player.move;
                 ghost.move
-            }
+            }*/
         }
 
 
