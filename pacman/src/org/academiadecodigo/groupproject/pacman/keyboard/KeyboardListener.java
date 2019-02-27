@@ -2,15 +2,10 @@ package org.academiadecodigo.groupproject.pacman.keyboard;
 
 import org.academiadecodigo.groupproject.pacman.Direction;
 import org.academiadecodigo.groupproject.pacman.gameobjects.Player;
-import org.academiadecodigo.simplegraphics.graphics.Ellipse;
-import org.academiadecodigo.simplegraphics.graphics.Movable;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
-
-import java.security.UnresolvedPermission;
-import java.util.zip.DeflaterInputStream;
 
 public class KeyboardListener implements KeyboardHandler {
 
@@ -54,17 +49,17 @@ public class KeyboardListener implements KeyboardHandler {
     public void keyPressed(KeyboardEvent keyboardEvent) {
 
         switch (keyboardEvent.getKey()){
-            case 38:
-                player.move(Direction.UP);
+            case KeyboardEvent.KEY_UP:
+                player.setDirection(Direction.UP);
                 break;
-            case 40:
-                player.move(Direction.DOWN);
+            case KeyboardEvent.KEY_DOWN:
+                player.setDirection(Direction.DOWN);
                 break;
-            case 39:
-                player.move(Direction.RIGHT);
+            case KeyboardEvent.KEY_RIGHT:
+                player.setDirection(Direction.RIGHT);
                 break;
-            case 37:
-                player.move(Direction.LEFT);
+            case KeyboardEvent.KEY_LEFT:
+                player.setDirection(Direction.LEFT);
                 break;
         }
 

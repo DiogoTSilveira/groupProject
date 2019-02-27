@@ -43,8 +43,14 @@ public class Game {
 
     }
 
-    public void start(){
+    public void start() throws InterruptedException {
 
+        while(true){
+
+            Thread.sleep(10);
+            player.move();
+
+        }
     }
 
     public void moveGhosts(){

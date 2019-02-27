@@ -15,9 +15,13 @@ import java.awt.*;
 
 public class Player extends GameObject{
 
-    private Direction direction;
+    private Direction currentDirection;
+    private Direction newDirection;
+
     private CollisionDetector collisionDetector;
-    private KeyboardListener keyboardListener;
+
+    private int col;
+    private int row;
 
     Ellipse player;
 
@@ -31,32 +35,36 @@ public class Player extends GameObject{
      * This method will use the keyboard to set movement to the Player.
      * @param direction - Which direction is the Player going.
      */
-    public void move(Direction direction){
-        int col = player.getX();
-        int row = player.getY();
-
+    public void setDirection(Direction direction){
         switch (direction){
             case UP:
-                player.setColor(Color.BLUE);
+                player.setColor(Color.BLUE);;
+                row = -1;
+                col = 0;
                 break;
 
             case DOWN:
                 player.setColor(Color.YELLOW);
+                row = 1;
+                col = 0;
                 break;
 
             case RIGHT:
                 player.setColor(Color.BLACK);
+                row = 0;
+                col = 1;
                 break;
 
             case LEFT:
                 player.setColor(Color.CYAN);
-        }
+                row = 0;
+                col = -1;
+                break;
 
+        }
     }
 
     public void move(){
-
-
-
+        player.translate(col, row);
     }
 }
