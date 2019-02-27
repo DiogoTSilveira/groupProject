@@ -7,6 +7,7 @@ package org.academiadecodigo.groupproject.pacman;
 import org.academiadecodigo.groupproject.pacman.gameobjects.Ghost;
 import org.academiadecodigo.groupproject.pacman.gameobjects.Player;
 import org.academiadecodigo.groupproject.pacman.gameobjects.WallFactory;
+import org.academiadecodigo.groupproject.pacman.keyboard.KeyboardListener;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 public class Game {
@@ -18,6 +19,7 @@ public class Game {
     private int rows;
     private int cellSize;
     private CollisionDetector collisionDetector;
+    private KeyboardListener keyboardListener;
     public static final int PADDING = 10;
 
 
@@ -34,6 +36,10 @@ public class Game {
         this.rectangle = new Rectangle(PADDING, PADDING, cols * cellSize, rows * cellSize);
         rectangle.draw();
         WallFactory.createGameField();
+
+        player = new Player();
+        keyboardListener = new KeyboardListener(player);
+
 
     }
 
