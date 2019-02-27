@@ -40,6 +40,7 @@ public class Game {
         player = new Player();
         keyboardListener = new KeyboardListener(player);
 
+        ghost = new Ghost();
 
     }
 
@@ -49,6 +50,8 @@ public class Game {
 
             Thread.sleep(10);
             player.move();
+            ghost.setDirection();
+            ghost.move();
 
         }
     }

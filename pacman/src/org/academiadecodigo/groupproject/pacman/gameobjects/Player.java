@@ -15,9 +15,6 @@ import java.awt.*;
 
 public class Player extends GameObject{
 
-    private Direction currentDirection;
-    private Direction newDirection;
-
     private CollisionDetector collisionDetector;
 
     private int col;
