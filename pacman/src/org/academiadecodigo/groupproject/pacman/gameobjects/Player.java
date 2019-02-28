@@ -30,10 +30,15 @@ picture.draw();
 
     }
 
+    public Direction getDirection() {
+        return direction;
+    }
+
     /**
      * This method will use the keyboard to set movement to the Player.
      * @param direction - Which direction is the Player going.
      */
+
     public void setDirection(Direction direction){
         this.direction = direction;
         switch (direction){

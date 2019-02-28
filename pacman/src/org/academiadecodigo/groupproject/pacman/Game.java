@@ -57,6 +57,7 @@ public class Game {
         Ghost ghost5 = new Ghost(370);
         this.ghost = new Ghost[]{ghost, ghost1, ghost2, ghost3, ghost4, ghost5};
 
+
     }
 
     public void start() throws InterruptedException {

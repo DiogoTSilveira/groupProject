@@ -45,7 +45,7 @@ public class WallFactory {
                 createWall(18, 30, 4, 2),
                 createWall(24, 30, 16, 2),
                 createWall(42, 30, 2, 2),
-                createWall(18, 30, 2, 10),
+               // createWall(18, 30, 2, 10),
                 createWall(46, 32, 8, 2),
                 createWall(42, 28, 10, 2),
                 createWall(12, 34, 8, 6),
@@ -77,8 +77,7 @@ public class WallFactory {
     private static Rectangle createWall(int x, int y, int width, int height) {
 
         Rectangle rectangle = new Rectangle((x * CELL_SIZE) + PADDING, y * (CELL_SIZE) + PADDING, width * CELL_SIZE, height * CELL_SIZE);
-        rectangle.getColor().getRed();
-        rectangle.setColor(new Color(255, 105, 180));
+        rectangle.setColor(new Color(55, 28, 71));
 
 
         rectangle.fill();
