@@ -16,9 +16,7 @@ import java.awt.*;
 public class Player extends GameObject{
 
     private CollisionDetector collisionDetector;
-
-    private int col;
-    private int row;
+    private Direction direction;
 
     Ellipse player;
 
@@ -26,6 +24,7 @@ public class Player extends GameObject{
         player = new Ellipse(310,330,20, 20);
         player.setColor(Color.YELLOW);
         player.fill();
+
     }
 
     /**
@@ -33,35 +32,38 @@ public class Player extends GameObject{
      * @param direction - Which direction is the Player going.
      */
     public void setDirection(Direction direction){
+        this.direction = direction;
         switch (direction){
             case UP:
                 player.setColor(Color.BLUE);
-                direction = Direction.UP;
+                this.direction = Direction.UP;
+                System.out.println(direction.getCol() + " " + direction.getRow());
                 break;
 
             case DOWN:
                 player.setColor(Color.YELLOW);
-                row = 1;
-                col = 0;
+                this.direction = Direction.DOWN;
                 break;
 
             case RIGHT:
                 player.setColor(Color.BLACK);
-                row = 0;
-                col = 1;
+                this.direction = Direction.RIGHT;
                 break;
 
             case LEFT:
                 player.setColor(Color.CYAN);
-                row = 0;
-                col = -1;
+                this.direction = Direction.LEFT;
                 break;
 
         }
     }
 
     public void move(){
-        player.translate(direction.co, row);
+        if(direction == null){
+            player.translate(0,0);
+            return;
+        }
+        player.translate(direction.getCol(), direction.getRow());
 
     }
 }
