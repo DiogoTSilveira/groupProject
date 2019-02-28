@@ -1,6 +1,5 @@
 package org.academiadecodigo.groupproject.pacman.gameobjects;
 
-import org.academiadecodigo.groupproject.pacman.CollisionDetector;
 import org.academiadecodigo.groupproject.pacman.Direction;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Ellipse;
@@ -11,16 +10,15 @@ import org.academiadecodigo.simplegraphics.graphics.Ellipse;
  * Give implementations after finishing the Player.
  */
 
-public class Ghost extends GameObject {
+public class Ghost {
 
     private Direction direction;
     private CollisionDetector collisionDetector;
 
-    private Ellipse ghost;
-    private int col;
-    private int row;
+    protected Ellipse ghost;
 
-    public Ghost() {
+    public Ghost(CollisionDetector collisionDetector) {
+        this.collisionDetector = collisionDetector;
         ghost = new Ellipse(310, 280, 20, 20);
         ghost.setColor(Color.GREEN);
         ghost.fill();
@@ -60,20 +58,32 @@ public class Ghost extends GameObject {
     /**
      * The Ghost will get a random direction from Direction. This Ghost will not be able to change direction
      * until he faces an obstacle ahead of him. Uppon hitting a wall for example, the Ghost will not return from where he came.
-     * */
+     */
     public void move() {
 
         if (direction == null) {
             direction = Direction.UP;
             return;
         }
-        if (Math.random() < 0.09 ) {
+        if (Math.random() < 0.09) {
             this.direction = direction.changeDirection();
-            if(Math.random() < 0.2){
+            if (Math.random() < 0.2) {
                 direction.getOpposite();
             }
         }
 
-        ghost.translate(direction.getCol(), direction.getRow());
+        ghost.translate(0, 0);
+
+        collisionDetector.setGhostPosition(ghost.getX(),ghost.getY());
+
     }
+
+    public int getCol() {
+        return direction.getCol();
+    }
+
+    public int getRow() {
+        return direction.getRow();
+    }
+
 }

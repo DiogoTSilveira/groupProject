@@ -4,6 +4,7 @@ package org.academiadecodigo.groupproject.pacman;
  * Raul
  */
 
+import org.academiadecodigo.groupproject.pacman.gameobjects.CollisionDetector;
 import org.academiadecodigo.groupproject.pacman.gameobjects.Ghost;
 import org.academiadecodigo.groupproject.pacman.gameobjects.Player;
 import org.academiadecodigo.groupproject.pacman.gameobjects.WallFactory;
@@ -24,43 +25,37 @@ public class Game {
     public static final int PADDING = 10;
 
 
-
-    public Game(int cols, int rows){
-        player = new Player();
+    public Game(int cols, int rows) {
+        collisionDetector = new CollisionDetector();
+        this.player = new Player(collisionDetector);
         this.cols = cols;
         this.rows = rows;
         cellSize = 10;
     }
 
 
-    public void init(){
+    public void init() {
         this.rectangle = new Rectangle(PADDING, PADDING, cols * cellSize, rows * cellSize);
         rectangle.setColor(Color.BLUE);
         rectangle.fill();
-        Rectangle background = new Rectangle(6 * cellSize + PADDING,10 * cellSize + PADDING, 48 * cellSize,40 * cellSize);
-        background.setColor(new Color(41,191,161));
+        Rectangle background = new Rectangle(6 * cellSize + PADDING, 10 * cellSize + PADDING, 48 * cellSize, 40 * cellSize);
+        background.setColor(new Color(41, 191, 161));
         background.fill();
-        player = new Player();
         WallFactory.createGameField();
         keyboardListener = new KeyboardListener(player);
 
-        ghost = new Ghost();
+        ghost = new Ghost(collisionDetector);
 
     }
 
     public void start() throws InterruptedException {
 
-        while(true){
+        while (true) {
 
             Thread.sleep(30);
             player.move();
-            //ghost.setDirection();
             ghost.move();
-
+            collisionDetector.check();
         }
-    }
-
-    public void moveGhosts(){
-        ghost.move();
     }
 }
