@@ -20,8 +20,8 @@ public class Ghost extends GameObject {
     private int col;
     private int row;
 
-    public Ghost() {
-        ghost = new Ellipse(310, 280, 20, 20);
+    public Ghost(int x) {
+        ghost = new Ellipse(x, 280, 20, 20);
         ghost.setColor(Color.GREEN);
         ghost.fill();
     }
@@ -61,7 +61,7 @@ public class Ghost extends GameObject {
      * The Ghost will get a random direction from Direction. This Ghost will not be able to change direction
      * until he faces an obstacle ahead of him. Uppon hitting a wall for example, the Ghost will not return from where he came.
      * */
-    public void move() {
+    public void  move() {
 
         if (direction == null) {
             direction = Direction.UP;
@@ -74,6 +74,6 @@ public class Ghost extends GameObject {
             }
         }
 
-        ghost.translate(direction.getCol(), direction.getRow());
+        ghost.translate(direction.getCol()-1, direction.getRow()-1);
     }
 }
