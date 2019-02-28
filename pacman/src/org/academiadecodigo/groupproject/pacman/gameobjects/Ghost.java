@@ -26,9 +26,6 @@ public class Ghost extends GameObject {
         ghost.fill();
     }
 
-
-
-
     /*  public void setDirection(){
         direction = Direction.randomDirection();
 
