@@ -35,9 +35,8 @@ public class Player extends GameObject{
     public void setDirection(Direction direction){
         switch (direction){
             case UP:
-                player.setColor(Color.BLUE);;
-                row = -1;
-                col = 0;
+                player.setColor(Color.BLUE);
+                direction = Direction.UP;
                 break;
 
             case DOWN:
@@ -62,6 +61,7 @@ public class Player extends GameObject{
     }
 
     public void move(){
-        player.translate(col, row);
+        player.translate(direction.co, row);
+
     }
 }
