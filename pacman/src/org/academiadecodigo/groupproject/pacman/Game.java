@@ -8,6 +8,7 @@ import org.academiadecodigo.groupproject.pacman.gameobjects.Ghost;
 import org.academiadecodigo.groupproject.pacman.gameobjects.Player;
 import org.academiadecodigo.groupproject.pacman.gameobjects.WallFactory;
 import org.academiadecodigo.groupproject.pacman.keyboard.KeyboardListener;
+import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 public class Game {
@@ -35,9 +36,11 @@ public class Game {
     public void init(){
         this.rectangle = new Rectangle(PADDING, PADDING, cols * cellSize, rows * cellSize);
         rectangle.draw();
-        WallFactory.createGameField();
-
+        Rectangle background = new Rectangle(6 * cellSize + PADDING,10 * cellSize + PADDING, 48 * cellSize,40 * cellSize);
+        background.setColor(new Color(41,191,161));
+        background.fill();
         player = new Player();
+        WallFactory.createGameField();
         keyboardListener = new KeyboardListener(player);
 
         ghost = new Ghost();
