@@ -37,7 +37,6 @@ public class Player extends GameObject{
             case UP:
                 player.setColor(Color.BLUE);
                 this.direction = Direction.UP;
-                System.out.println(direction.getCol() + " " + direction.getRow());
                 break;
 
             case DOWN:

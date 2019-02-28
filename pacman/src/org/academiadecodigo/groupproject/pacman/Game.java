@@ -48,7 +48,7 @@ public class Game {
 
         while(true){
 
-            Thread.sleep(35);
+            Thread.sleep(30);
             player.move();
             ghost.setDirection();
             ghost.move();
