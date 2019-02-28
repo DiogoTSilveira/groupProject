@@ -22,6 +22,13 @@ public enum Direction {
         return Direction.values()[(int) (Math.random() * Direction.values().length)];
     }
 
+    public int getCol() {
+        return col;
+    }
+
+    public int getRow() {
+        return row;
+    }
 
     public  Direction changeDirection() {
 
