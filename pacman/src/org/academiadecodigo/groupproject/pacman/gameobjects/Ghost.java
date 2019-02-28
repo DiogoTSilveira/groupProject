@@ -7,11 +7,11 @@ import org.academiadecodigo.simplegraphics.graphics.Ellipse;
 
 /**
  * Diogo
- *
+ * <p>
  * Give implementations after finishing the Player.
  */
 
-public class Ghost extends GameObject{
+public class Ghost extends GameObject {
 
     private Direction direction;
     private CollisionDetector collisionDetector;
@@ -20,14 +20,16 @@ public class Ghost extends GameObject{
     private int col;
     private int row;
 
-    public Ghost(){
-        ghost = new Ellipse(310,280, 20,20);
+    public Ghost() {
+        ghost = new Ellipse(310, 280, 20, 20);
         ghost.setColor(Color.GREEN);
         ghost.fill();
     }
 
 
-    public void setDirection(){
+
+
+    /*  public void setDirection(){
         direction = Direction.randomDirection();
 
         switch (direction){
@@ -56,13 +58,25 @@ public class Ghost extends GameObject{
                 break;
 
         }
-    }
+    }*/
 
     /*
-    * The Ghost will get a random direction from Direction. This Ghost will not be able to change direction
-    * until he faces an obstacle ahead of him. Uppon hitting a wall for example, the Ghost will not return from where he came.
-    * */
-    public void move(){
-        ghost.translate(col, row);
+     * The Ghost will get a random direction from Direction. This Ghost will not be able to change direction
+     * until he faces an obstacle ahead of him. Uppon hitting a wall for example, the Ghost will not return from where he came.
+     * */
+    public void move() {
+
+        if (direction == null) {
+            direction = Direction.UP;
+            return;
+        }
+        if (Math.random() < 0.09 ) {
+            this.direction = direction.changeDirection();
+            if(Math.random() < 0.2){
+                direction.getOpposite();
+            }
+        }
+
+        ghost.translate(direction.getCol(), direction.getRow());
     }
 }
