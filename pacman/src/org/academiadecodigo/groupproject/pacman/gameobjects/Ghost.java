@@ -1,6 +1,6 @@
 package org.academiadecodigo.groupproject.pacman.gameobjects;
 
-import org.academiadecodigo.groupproject.pacman.CollisionDetector;
+//import org.academiadecodigo.groupproject.pacman.CollisionDetector;
 import org.academiadecodigo.groupproject.pacman.Direction;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Ellipse;

@@ -76,12 +76,11 @@ public class WallFactory {
 
     private static Rectangle createWall(int x, int y, int width, int height) {
 
-        Rectangle rectangle = new Rectangle((x * CELL_SIZE) + PADDING, y * (CELL_SIZE) + PADDING, width * CELL_SIZE, height * CELL_SIZE);
-        rectangle.getColor().getRed();
-        rectangle.setColor(new Color(255, 105, 180));
 
+        Wall wall = new Wall(new Rectangle((x * CELL_SIZE) + PADDING, y * (CELL_SIZE) + PADDING, width * CELL_SIZE, height * CELL_SIZE));
 
-        rectangle.fill();
+        Rectangle rectangle = wall.wall;
+
         return rectangle;
 
     }

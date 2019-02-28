@@ -1,39 +1,39 @@
 package org.academiadecodigo.groupproject.pacman.gameobjects;
 
-import org.academiadecodigo.groupproject.pacman.CollisionDetector;
 import org.academiadecodigo.groupproject.pacman.Direction;
-import org.academiadecodigo.groupproject.pacman.keyboard.KeyboardListener;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Ellipse;
-import org.academiadecodigo.simplegraphics.graphics.Movable;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
-
-import java.awt.*;
 
 /**
  * Diogo
  */
 
-public class Player extends GameObject{
+public class Player{
 
     private CollisionDetector collisionDetector;
     private Direction direction;
     private Picture picture;
 
-    Ellipse player;
+    private Ellipse player;
 
-    public Player(){
+    public Player(CollisionDetector collisionDetector){
+        this.collisionDetector = collisionDetector;
         player = new Ellipse(310,330,20, 20);
         picture = new Picture(310,330,"resources/Pacman/RIGHT.png");
 
-picture.draw();
+        picture.draw();
+    }
 
+    public Direction getDirection() {
+        return direction;
     }
 
     /**
      * This method will use the keyboard to set movement to the Player.
      * @param direction - Which direction is the Player going.
      */
+
     public void setDirection(Direction direction){
         this.direction = direction;
         switch (direction){
@@ -86,17 +86,30 @@ picture.draw();
 
     public void move(){
 
+
         if(direction == null){
 
             player.translate(0,0);
             picture.translate(0,0);
+
             return;
 
         }
+        System.out.println("Player Direction: " + direction);
 
         player.translate(direction.getCol(), direction.getRow());
-
         picture.translate(direction.getCol(),direction.getRow());
 
+        System.out.println("Player sprite x and y: " + player.getX() + ", " + player.getY());
+
+        collisionDetector.setPlayerPosition(player.getX(),player.getY());
+    }
+
+    public int getCol() {
+        return direction.getCol();
+    }
+
+    public int getRow(){
+        return direction.getRow();
     }
 }
