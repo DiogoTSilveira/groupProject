@@ -35,7 +35,8 @@ public class Game {
 
     public void init(){
         this.rectangle = new Rectangle(PADDING, PADDING, cols * cellSize, rows * cellSize);
-        rectangle.draw();
+        rectangle.setColor(Color.BLUE);
+        rectangle.fill();
         Rectangle background = new Rectangle(6 * cellSize + PADDING,10 * cellSize + PADDING, 48 * cellSize,40 * cellSize);
         background.setColor(new Color(41,191,161));
         background.fill();
