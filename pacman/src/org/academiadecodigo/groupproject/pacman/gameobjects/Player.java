@@ -9,7 +9,7 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
  * Diogo
  */
 
-public class Player{
+public class Player extends GameObject{
 
     private CollisionDetector collisionDetector;
     private Direction direction;
@@ -18,8 +18,9 @@ public class Player{
     private Ellipse player;
 
     public Player(CollisionDetector collisionDetector){
+        super(new Ellipse( 310,330,20,20));
         this.collisionDetector = collisionDetector;
-        player = new Ellipse(310,330,20, 20);
+        player = (Ellipse) super.shape;
         picture = new Picture(310,330,"resources/Pacman/RIGHT.png");
 
         picture.draw();

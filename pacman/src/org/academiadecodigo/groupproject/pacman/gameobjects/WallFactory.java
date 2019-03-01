@@ -2,6 +2,7 @@ package org.academiadecodigo.groupproject.pacman.gameobjects;
 
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.graphics.Shape;
 
 /**
  * Jorge
@@ -14,7 +15,7 @@ public class WallFactory {
     private final static int PADDING = 10;
 
 
-    public static Rectangle[] createGameField() {
+    public static Shape[] createGameField() {
 
         return new Rectangle[]{
                 createWall(5, 9, 1, 42),
@@ -45,7 +46,6 @@ public class WallFactory {
                 createWall(18, 30, 4, 2),
                 createWall(24, 30, 16, 2),
                 createWall(42, 30, 2, 2),
-               // createWall(18, 30, 2, 10),
                 createWall(46, 32, 8, 2),
                 createWall(42, 28, 10, 2),
                 createWall(12, 34, 8, 6),

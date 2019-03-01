@@ -11,6 +11,7 @@ import org.academiadecodigo.groupproject.pacman.gameobjects.WallFactory;
 import org.academiadecodigo.groupproject.pacman.keyboard.KeyboardListener;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.graphics.Shape;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Game {
@@ -21,8 +22,7 @@ public class Game {
     private int cols;
     private int rows;
     private int cellSize;
-    private Rectangle[] gameField;
-   // private CollisionDetector collisionDetector;
+    private CollisionDetector collisionDetector;
     private KeyboardListener keyboardListener;
     public static final int PADDING = 10;
 
@@ -45,20 +45,20 @@ public class Game {
         Rectangle background = new Rectangle(6 * cellSize + PADDING, 10 * cellSize + PADDING, 48 * cellSize, 40 * cellSize);
         background.setColor(new Color(41, 191, 161));
         background.fill();
-        player = new Player(new CollisionDetector());
+        collisionDetector = new CollisionDetector();
+        collisionDetector.setWalls(WallFactory.createGameField());
+        player = new Player(collisionDetector);
+
         keyboardListener = new KeyboardListener(player);
 
 
-        gameField = WallFactory.createGameField();
-        Ghost ghost = new Ghost(270);
-        Ghost ghost1 = new Ghost(290);
-        Ghost ghost2 = new Ghost(310);
-        Ghost ghost3 = new Ghost(330);
-        Ghost ghost4 = new Ghost(350);
-        Ghost ghost5 = new Ghost(370);
+        Ghost ghost = new Ghost(270, collisionDetector);
+        Ghost ghost1 = new Ghost(290, collisionDetector);
+        Ghost ghost2 = new Ghost(310, collisionDetector);
+        Ghost ghost3 = new Ghost(330, collisionDetector);
+        Ghost ghost4 = new Ghost(350, collisionDetector);
+        Ghost ghost5 = new Ghost(370, collisionDetector);
         this.ghost = new Ghost[]{ghost, ghost1, ghost2, ghost3, ghost4, ghost5};
-
-
 
 
     }
@@ -66,15 +66,16 @@ public class Game {
     public void start() throws InterruptedException {
 
         while (true) {
+            if (player.getDirection() == null) {
+                continue;
+            }
 
             Thread.sleep(30);
             player.move();
             //ghost.setDirection();
-            if (player.getDirection() != null) {
-                for (int i = 0; i < ghost.length; i++) {
-
-                    ghost[i].move();
-                }
+            moveGhosts();
+            if(collisionDetector.checkCollisionWithGhosts(player, ghost)){
+                break;
             }
         }
 

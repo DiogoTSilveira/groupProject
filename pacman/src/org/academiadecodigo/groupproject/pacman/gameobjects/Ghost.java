@@ -4,6 +4,7 @@ package org.academiadecodigo.groupproject.pacman.gameobjects;
 import org.academiadecodigo.groupproject.pacman.Direction;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Ellipse;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 /**
  * Diogo
@@ -13,16 +14,19 @@ import org.academiadecodigo.simplegraphics.graphics.Ellipse;
 
 public class Ghost extends GameObject {
 
-    private Direction direction;
     private CollisionDetector collisionDetector;
-
+    private Picture picture;
     private Ellipse ghost;
     private int col;
     private int row;
 
-    public Ghost(int x) {
-        ghost = new Ellipse(x, 280, 20, 20);
+    public Ghost(int x, CollisionDetector collisionDetector) {
+        super(new Ellipse(x,280,20,20 ),null );
+        this.collisionDetector =collisionDetector;
+        ghost = (Ellipse) super.shape;
         ghost.setColor(Color.GREEN);
+        Picture nuno = new Picture(x, 280, "resources/Webp.net-resizeimage.png");
+
         ghost.fill();
     }
 
@@ -72,6 +76,11 @@ public class Ghost extends GameObject {
             if(Math.random() < 0.2){
                 direction.getOpposite();
             }
+        }
+
+        if(collisionDetector.checkCollisionWithWalls(this)) {
+            move();
+            return;
         }
 
         ghost.translate(direction.getCol()-1, direction.getRow()-1);

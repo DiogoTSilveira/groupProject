@@ -3,6 +3,7 @@ package org.academiadecodigo.groupproject.pacman.gameobjects;
 
 import org.academiadecodigo.simplegraphics.graphics.Ellipse;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.graphics.Shape;
 
 /**
  * Ze Diogo
@@ -15,8 +16,13 @@ public class CollisionDetector {
 
     protected int ghostX;
     protected int ghostY;
+    private Shape[] walls;
 
     public CollisionDetector(){
+    }
+
+    public void setWalls(Shape[] walls) {
+        this.walls = walls;
     }
 
     public void setPlayerPosition(int x, int y){
@@ -29,13 +35,18 @@ public class CollisionDetector {
         ghostY = y;
     }
 
-    public void check(){
+    public boolean checkCollisionWithWalls(GameObject gameObject){
         System.out.println("Player x and y: " + playerX + ", " + playerY);
         System.out.println("Ghost x and y: " + ghostX + ", " + ghostY);
 
         if(playerX == ghostX && playerY == ghostY){
             System.out.println("HIT");
         }
+    }
+
+    public boolean checkCollisionWithGhosts(Player player, Ghost[] ghosts){
+
+
     }
 
     public void collision() {
