@@ -17,10 +17,6 @@ public class CollisionDetector {
     protected int ghostY;
 
     public CollisionDetector(){
-        playerX = 0;
-        playerY = 0;
-        ghostX = 0;
-        ghostY = 0;
     }
 
     public void setPlayerPosition(int x, int y){
