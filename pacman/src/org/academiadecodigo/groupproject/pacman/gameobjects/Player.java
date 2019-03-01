@@ -9,7 +9,7 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
  * Diogo
  */
 
-public class Player extends GameObject{
+public class Player extends GameObject {
 
     private CollisionDetector collisionDetector;
     private Direction direction;
@@ -17,11 +17,11 @@ public class Player extends GameObject{
 
     private Ellipse player;
 
-    public Player(CollisionDetector collisionDetector){
-        super(new Ellipse( 310,330,20,20));
+    public Player(CollisionDetector collisionDetector) {
+        super(new Ellipse(310, 330, 15, 15), null);
         this.collisionDetector = collisionDetector;
         player = (Ellipse) super.shape;
-        picture = new Picture(310,330,"resources/Pacman/RIGHT.png");
+        picture = new Picture(310, 330, "resources/Pacman/RIGHT.png");
 
         picture.draw();
     }
@@ -32,19 +32,20 @@ public class Player extends GameObject{
 
     /**
      * This method will use the keyboard to set movement to the Player.
+     *
      * @param direction - Which direction is the Player going.
      */
 
-    public void setDirection(Direction direction){
+    public void setDirection(Direction direction) {
         this.direction = direction;
-        switch (direction){
+        switch (direction) {
             case UP:
 
                 player.setColor(Color.BLUE);
                 this.direction = Direction.UP;
 
                 picture.delete();
-                picture = new Picture(player.getX(), player.getY(), "resources/Pacman/UP.png" );
+                picture = new Picture(player.getX(), player.getY(), "resources/Pacman/UP.png");
                 picture.draw();
 
                 break;
@@ -55,7 +56,7 @@ public class Player extends GameObject{
                 this.direction = Direction.DOWN;
 
                 picture.delete();
-                picture = new Picture(player.getX(), player.getY(), "resources/Pacman/DOWN.png" );
+                picture = new Picture(player.getX(), player.getY(), "resources/Pacman/DOWN.png");
                 picture.draw();
 
                 break;
@@ -66,7 +67,7 @@ public class Player extends GameObject{
                 this.direction = Direction.RIGHT;
 
                 picture.delete();
-                picture = new Picture(player.getX(), player.getY(), "resources/Pacman/RIGHT.png" );
+                picture = new Picture(player.getX(), player.getY(), "resources/Pacman/RIGHT.png");
                 picture.draw();
 
                 break;
@@ -77,7 +78,7 @@ public class Player extends GameObject{
                 this.direction = Direction.LEFT;
 
                 picture.delete();
-                picture = new Picture(player.getX(), player.getY(), "resources/Pacman/LEFT.png" );
+                picture = new Picture(player.getX(), player.getY(), "resources/Pacman/LEFT.png");
                 picture.draw();
 
                 break;
@@ -85,32 +86,34 @@ public class Player extends GameObject{
         }
     }
 
-    public void move(){
+    public void move() {
 
 
-        if(direction == null){
+        if (direction == null) {
 
-            player.translate(0,0);
-            picture.translate(0,0);
+            player.translate(0, 0);
+            picture.translate(0, 0);
 
             return;
 
         }
-        System.out.println("Player Direction: " + direction);
-
         player.translate(direction.getCol(), direction.getRow());
-        picture.translate(direction.getCol(),direction.getRow());
+        picture.translate(direction.getCol(), direction.getRow());
 
-        System.out.println("Player sprite x and y: " + player.getX() + ", " + player.getY());
+        if (collisionDetector.checkCollisionWithWalls(this)) {
+            player.translate(-direction.getCol(), -direction.getRow());
+            picture.translate(-direction.getCol(),- direction.getRow());
+            return;
+        }
 
-        collisionDetector.setPlayerPosition(player.getX(),player.getY());
+
     }
 
     public int getCol() {
         return direction.getCol();
     }
 
-    public int getRow(){
+    public int getRow() {
         return direction.getRow();
     }
 }
