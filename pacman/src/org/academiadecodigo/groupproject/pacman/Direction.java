@@ -5,10 +5,10 @@ package org.academiadecodigo.groupproject.pacman;
  */
 
 public enum Direction {
-    UP(0,-1),
-    DOWN(0,1),
-    LEFT(-1,0),
-    RIGHT(1,0);
+    UP(0,-2),
+    DOWN(0,2),
+    LEFT(-2,0),
+    RIGHT(2,0);
     private int col;
     private int row;
 
@@ -26,7 +26,21 @@ public enum Direction {
         return row;
     }
 
-    public  Direction  changeDirection() {
+    public Direction randomDirection(){
+        if (Math.random()< 0.25 ){
+            return UP;
+        }
+        if (Math.random() < 0.5){
+            return DOWN;
+
+        }
+        if(Math.random() < 0.75){
+            return LEFT;
+        }
+        return RIGHT;
+    }
+
+    public  Direction changeDirection() {
 
         switch (this) {
             case UP:

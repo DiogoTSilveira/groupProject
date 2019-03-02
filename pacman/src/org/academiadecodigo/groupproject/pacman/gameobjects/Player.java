@@ -3,7 +3,6 @@ package org.academiadecodigo.groupproject.pacman.gameobjects;
 import org.academiadecodigo.groupproject.pacman.Direction;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Ellipse;
-import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 /**
@@ -15,11 +14,14 @@ public class Player extends GameObject {
     private CollisionDetector collisionDetector;
     private Direction direction;
     private Picture picture;
+    private Picture up;
+    private Picture left;
+    private Picture right;
 
     private Ellipse player;
 
     public Player(CollisionDetector collisionDetector) {
-        super(new Ellipse(302 + 10, 322 + 10, 16, 16), null);
+        super(new Ellipse(304 + 10, 324 + 10, 12, 12), null);
         this.collisionDetector = collisionDetector;
         player = (Ellipse) super.shape;
         //player.draw();
@@ -45,6 +47,7 @@ public class Player extends GameObject {
 
                 player.setColor(Color.BLUE);
                 this.direction = Direction.UP;
+
 
                 picture.delete();
                 picture = new Picture(player.getX(), player.getY(), "resources/Pacman/UP.png");

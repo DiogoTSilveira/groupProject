@@ -3,6 +3,7 @@ package org.academiadecodigo.groupproject.pacman.gameobjects;
 //import org.academiadecodigo.groupproject.pacman.CollisionDetector;
 
 import org.academiadecodigo.groupproject.pacman.Direction;
+import org.academiadecodigo.groupproject.pacman.Main;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Ellipse;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
@@ -43,23 +44,29 @@ public class Ghost extends GameObject {
             direction = Direction.UP;
             return;
         }
-        if (collisionDetector.checkCollisionWithWalls(this)) {
-            this.direction = direction.changeDirection();
-            ghost.translate(direction.getCol(), direction.getRow());
-            if (collisionDetector.checkCollisionWithWalls(this)) {
-                ghost.translate(-direction.getCol(), -direction.getRow());
-                this.direction = direction.getOpposite();
-            }else {
-                return;
-            }
 
+        if(Math.random() < 0.01) {
+            direction = direction.randomDirection();
         }
+        //if (collisionDetector.checkCollisionWithWalls(this)) {
+        //  this.direction = direction.changeDirection();
+        //ghost.translate(direction.getCol(), direction.getRow());
+        //if (collisionDetector.checkCollisionWithWalls(this)) {
+        //  ghost.translate(-direction.getCol(), -direction.getRow());
+        //this.direction = direction.getOpposite();
+        //}else return;
         ghost.translate(direction.getCol(), direction.getRow());
 
-        //if(collisionDetector.checkCollisionWithWalls(this)) {
-        //move();
-        //  return;
+
         //}
 
+        if (collisionDetector.checkCollisionWithWalls(this)) {
+            System.out.println("collision");
+            ghost.translate(-direction.getCol(), -direction.getRow());
+            move();
+            return;
+        }
     }
+
 }
+
