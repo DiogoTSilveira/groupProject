@@ -57,18 +57,12 @@ public class CollisionDetector {
         for (int i = 0; i < walls.length; i++) {
 
             int wallBottom = walls[i].getY() + walls[i].getHeight();
-            System.out.println("Player y: " + gameObject.getY() + " \n Wall y+Height: " + (walls[i].getY() + walls[i].getHeight()));
             if (yPlayer == wallBottom) {
 
                 if ((gameObject.getX() > walls[i].getX()
                         && gameObject.getX() < walls[i].getX() + walls[i].getWidth()) || (gameObject.getX() + gameObject.getWidth() > walls[i].getX() &&
                         gameObject.getX() + gameObject.getWidth() < walls[i].getX() + walls[i].getWidth())) {
-
-
-                    System.out.println("HIT");
                     return true;
-
-
                 }
             }
         }
@@ -81,11 +75,9 @@ public class CollisionDetector {
             if (gameObject.getY() + gameObject.getHeight() == walls[i].getY()) {
 
                 if (gameObject.getX() > walls[i].getX() && gameObject.getX() < walls[i].getX() + walls[i].getWidth() ||
+                        gameObject.getX() + gameObject.getWidth() > walls[i].getX() &&
+                                gameObject.getX() + gameObject.getWidth() < walls[i].getX() + walls[i].getWidth()) {
 
-                        gameObject.getX() + gameObject.getWidth() > walls[i].getX()
-                                && gameObject.getX() + gameObject.getWidth() < walls[i].getX() + walls[i].getWidth()) {
-
-                    System.out.println("hitDown");
                     return true;
 
                 }
@@ -101,25 +93,29 @@ public class CollisionDetector {
     private boolean checkCollisionRight(GameObject gameObject) {
         for (int i = 0; i < walls.length; i++) {
 
-            if (gameObject.getX() + gameObject.getWidth() == walls[i].getX() &&
-                    gameObject.getY() > walls[i].getY() && gameObject.getY() < walls[i].getY() + walls[i].getHeight()) {
-                System.out.println("Hit Right");
-                return true;
-            }
+            if (gameObject.getX() + gameObject.getWidth() == walls[i].getX()) {
+                if ((gameObject.getY() + gameObject.getHeight() > walls[i].getY() &&
+                        gameObject.getY() + gameObject.getHeight() < walls[i].getY() + walls[i].getHeight()) ||
+                        gameObject.getY() < walls[i].getY() + walls[i].getHeight() && gameObject.getY() > walls[i].getY()) {
+                    return true;
+                }
 
+            }
         }
 
         return false;
     }
 
+
     private boolean checkCollisionLeft(GameObject gameObject) {
         for (int i = 0; i < walls.length; i++) {
 
-            if (gameObject.getX() == walls[i].getX() + walls[i].getHeight() &&
-                    gameObject.getY() > walls[i].getY() && gameObject.getY() < walls[i].getY() + walls[i].getHeight() &&
-                    gameObject.getY() + gameObject.getWidth() > walls[i].getY() && gameObject.getY() + gameObject.getY() < walls[i].getY() + walls[i].getWidth()) {
-                System.out.println("Hit Left");
-                return true;
+            if (gameObject.getX() == walls[i].getX() + walls[i].getWidth()) {
+                if ((gameObject.getY() < walls[i].getY() + walls[i].getHeight() && gameObject.getY() > walls[i].getY()) ||
+                        gameObject.getY() + gameObject.getHeight() > walls[i].getY() &&
+                                gameObject.getY() + gameObject.getHeight() < walls[i].getY() + walls[i].getHeight()) {
+                    return true;
+                }
             }
 
         }

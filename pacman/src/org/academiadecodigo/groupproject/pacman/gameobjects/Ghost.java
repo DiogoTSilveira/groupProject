@@ -1,6 +1,7 @@
 package org.academiadecodigo.groupproject.pacman.gameobjects;
 
 //import org.academiadecodigo.groupproject.pacman.CollisionDetector;
+
 import org.academiadecodigo.groupproject.pacman.Direction;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Ellipse;
@@ -21,8 +22,8 @@ public class Ghost extends GameObject {
     private int row;
 
     public Ghost(int x, CollisionDetector collisionDetector) {
-        super(new Ellipse(x,280,20,20 ),null );
-        this.collisionDetector =collisionDetector;
+        super(new Ellipse(x, 274 + 10, 12, 12), null);
+        this.collisionDetector = collisionDetector;
         ghost = (Ellipse) super.shape;
         ghost.setColor(Color.GREEN);
 
@@ -35,25 +36,30 @@ public class Ghost extends GameObject {
     /**
      * The Ghost will get a random direction from Direction. This Ghost will not be able to change direction
      * until he faces an obstacle ahead of him. Uppon hitting a wall for example, the Ghost will not return from where he came.
-     * */
-    public void  move() {
+     */
+    public void move() {
 
         if (direction == null) {
             direction = Direction.UP;
             return;
         }
-        if (Math.random() < 0.09 ) {
+        if (collisionDetector.checkCollisionWithWalls(this)) {
             this.direction = direction.changeDirection();
-            if(Math.random() < 0.2){
-                direction.getOpposite();
+            ghost.translate(direction.getCol(), direction.getRow());
+            if (collisionDetector.checkCollisionWithWalls(this)) {
+                ghost.translate(-direction.getCol(), -direction.getRow());
+                this.direction = direction.getOpposite();
+            }else {
+                return;
             }
-        }
 
-       // if(collisionDetector.checkCollisionWithWalls(this)) {
-         //   move();
-           // return;
+        }
+        ghost.translate(direction.getCol(), direction.getRow());
+
+        //if(collisionDetector.checkCollisionWithWalls(this)) {
+        //move();
+        //  return;
         //}
 
-        ghost.translate(direction.getCol()-1, direction.getRow()-1);
     }
 }

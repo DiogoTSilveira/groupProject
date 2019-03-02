@@ -53,12 +53,12 @@ public class Game {
         keyboardListener = new KeyboardListener(player);
 
 
-        Ghost ghost = new Ghost(270, collisionDetector);
-        Ghost ghost1 = new Ghost(290, collisionDetector);
-        Ghost ghost2 = new Ghost(310, collisionDetector);
-        Ghost ghost3 = new Ghost(330, collisionDetector);
-        Ghost ghost4 = new Ghost(350, collisionDetector);
-        Ghost ghost5 = new Ghost(370, collisionDetector);
+        Ghost ghost = new Ghost(264 +10, collisionDetector);
+        Ghost ghost1 = new Ghost(294, collisionDetector);
+        Ghost ghost2 = new Ghost(314, collisionDetector);
+        Ghost ghost3 = new Ghost(334, collisionDetector);
+        Ghost ghost4 = new Ghost(354, collisionDetector);
+        Ghost ghost5 = new Ghost(374, collisionDetector);
         this.ghost = new Ghost[]{ghost, ghost1, ghost2, ghost3, ghost4, ghost5};
 
 

@@ -80,7 +80,7 @@ public class WallFactory {
         rectangle.setColor(new Color(55, 28, 71));
 
         rectangle.draw();
-        //rectangle.fill();
+        rectangle.fill();
         return rectangle;
 
     }
