@@ -5,10 +5,10 @@ package org.academiadecodigo.groupproject.pacman;
  */
 
 public enum Direction {
-    UP(0,-3),
-    DOWN(0,3),
-    LEFT(-3,0),
-    RIGHT(3,0);
+    UP(0,-2),
+    DOWN(0,2),
+    LEFT(-2,0),
+    RIGHT(2,0);
     private int col;
     private int row;
 

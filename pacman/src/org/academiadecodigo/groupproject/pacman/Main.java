@@ -1,5 +1,7 @@
 package org.academiadecodigo.groupproject.pacman;
 
+import org.academiadecodigo.simplegraphics.graphics.Ellipse;
+
 public class Main {
 
     public static void main(String[] args) throws InterruptedException {
@@ -7,6 +9,7 @@ public class Main {
         game.init();
 
         game.start();
+
     }
 
 

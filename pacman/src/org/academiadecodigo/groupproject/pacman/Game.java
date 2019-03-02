@@ -10,6 +10,7 @@ import org.academiadecodigo.groupproject.pacman.gameobjects.Player;
 import org.academiadecodigo.groupproject.pacman.gameobjects.WallFactory;
 import org.academiadecodigo.groupproject.pacman.keyboard.KeyboardListener;
 import org.academiadecodigo.simplegraphics.graphics.Color;
+import org.academiadecodigo.simplegraphics.graphics.Ellipse;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.graphics.Shape;
 import org.academiadecodigo.simplegraphics.pictures.Picture;

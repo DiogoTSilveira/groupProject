@@ -79,8 +79,8 @@ public class WallFactory {
         Rectangle rectangle = new Rectangle((x * CELL_SIZE) + PADDING, y * (CELL_SIZE) + PADDING, width * CELL_SIZE, height * CELL_SIZE);
         rectangle.setColor(new Color(55, 28, 71));
 
-
-        rectangle.fill();
+        rectangle.draw();
+        //rectangle.fill();
         return rectangle;
 
     }

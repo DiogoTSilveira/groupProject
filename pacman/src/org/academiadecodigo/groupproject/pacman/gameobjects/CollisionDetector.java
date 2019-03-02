@@ -56,27 +56,55 @@ public class CollisionDetector {
 
         for (int i = 0; i < walls.length; i++) {
 
-        int wallBottom = walls[i].getY() + walls[i].getHeight();
-            System.out.println(yPlayer-wallBottom);
-            if (yPlayer < wallBottom &&  yPlayer-wallBottom   ) {
+            int wallBottom = walls[i].getY() + walls[i].getHeight();
+            System.out.println("Player y: " + gameObject.getY() + " \n Wall y+Height: " + (walls[i].getY() + walls[i].getHeight()));
+            if (yPlayer == wallBottom && gameObject.getX() > walls[i].getX() && gameObject.getX() < walls[i].getX() + walls[i].getWidth()) {
+
                 System.out.println("HIT");
                 return true;
+
             }
         }
         return false;
     }
 
     private boolean checkCollisionDown(GameObject gameObject) {
+        for (int i = 0; i < walls.length; i++) {
+            if (gameObject.getY() + gameObject.getHeight() == walls[i].getY() &&
+                    gameObject.getX() > walls[i].getX() && gameObject.getX() < walls[i].getX() + walls[i].getWidth()) {
+                System.out.println("hitDown");
+                return true;
+            }
+
+        }
         return false;
     }
 
     private boolean checkCollisionRight(GameObject gameObject) {
+        for (int i = 0; i < walls.length; i++) {
+
+            if (gameObject.getX() + gameObject.getWidth() == walls[i].getX() &&
+                    gameObject.getY() > walls[i].getY() && gameObject.getY() < walls[i].getY() + walls[i].getHeight()) {
+                System.out.println("Hit Right");
+                return true;
+            }
+
+        }
+
         return false;
     }
 
     private boolean checkCollisionLeft(GameObject gameObject) {
-        return false;
+        for (int i = 0; i < walls.length; i++) {
+
+            if (gameObject.getX() == walls[i].getX() + walls[i].getHeight() &&
+                    gameObject.getY() > walls[i].getY() && gameObject.getY() < walls[i].getY() + walls[i].getHeight()) {
+                System.out.println("Hit Left");
+                return true;
+            }
+
+        }
+            return false;
+
     }
-
-
 }
