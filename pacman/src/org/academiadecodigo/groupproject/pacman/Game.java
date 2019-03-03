@@ -18,14 +18,16 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 public class Game {
 
     private Rectangle rectangle;
-    private Player player;
-    private Ghost[] ghost;
+
     private int cols;
     private int rows;
     private int cellSize;
+    public static final int PADDING = 10;
+
+    private Player player;
+    private Ghost[] ghost;
     private CollisionDetector collisionDetector;
     private KeyboardListener keyboardListener;
-    public static final int PADDING = 10;
 
 
     public Game(int cols, int rows) {
@@ -34,22 +36,39 @@ public class Game {
         cellSize = 10;
     }
 
+    /**
+     * The init() will create the background and the actual field where the player and the ghosts will spawn.
+     * The player will have a keyboardListener to set his directions and both player and ghosts will have a collision detector.
+     */
 
     public void init() {
         //this.rectangle = new Rectangle(PADDING, PADDING, cols * cellSize, rows * cellSize);
         //rectangle.setColor(Color.BLUE);
         //rectangle.fill();
         //Picture picture = new Picture( PADDING, PADDING,"resources/Pacman/Webp.net-resizeimage.jpg");
-        Picture picture = new Picture(PADDING, PADDING, "resources/oie_0AT68Uz38HJQ.jpg");
-        picture.draw();
 
-        Rectangle background = new Rectangle(6 * cellSize + PADDING, 10 * cellSize + PADDING, 48 * cellSize, 40 * cellSize);
-        background.setColor(new Color(41, 191, 161));
-        background.fill();
+        createBackgroundAndField();
+        initializeCollisionDetector();
+        initializeGameEntities();
+
+    }
+
+    private void createBackgroundAndField() {
+        Picture background = new Picture(PADDING, PADDING, "resources/oie_0AT68Uz38HJQ.jpg");
+        background.draw();
+
+        Rectangle field = new Rectangle(6 * cellSize + PADDING, 10 * cellSize + PADDING, 48 * cellSize, 40 * cellSize);
+        field.setColor(new Color(41, 191, 161));
+        field.fill();
+    }
+
+    public void initializeCollisionDetector(){
         collisionDetector = new CollisionDetector();
         collisionDetector.setWalls(WallFactory.createGameField());
-        player = new Player(collisionDetector);
+    }
 
+    private void initializeGameEntities() {
+        player = new Player(collisionDetector);
         keyboardListener = new KeyboardListener(player);
 
 
@@ -60,9 +79,19 @@ public class Game {
         Ghost ghost4 = new Ghost(354, collisionDetector);
         Ghost ghost5 = new Ghost(374, collisionDetector);
         this.ghost = new Ghost[]{ghost, ghost1, ghost2, ghost3, ghost4, ghost5};
-
-
     }
+
+    /**
+     * This method will set loop which never ends unless the player colides with a ghost.
+     *
+     * @throws InterruptedException if any thread has interrupted the current thread.
+     * The interrupted status of the current thread is cleared when this exception is thrown.
+     *
+     * Every time the player movement is null it will proceed to the next iteration of the loop. This happens in the beginning.
+     *
+     * After the player moves, it will check collisions with other ghosts. If true, breaks the loop but if not, the ghosts will
+     * move.
+     */
 
     public void start() throws InterruptedException {
 
