@@ -5,25 +5,25 @@ package org.academiadecodigo.groupproject.pacman;
  */
 
 public enum Direction {
-    UP(0,-2),
-    DOWN(0,2),
-    LEFT(-2,0),
-    RIGHT(2,0);
-    private int col;
-    private int row;
+    UP(0,-1),
+    DOWN(0,1),
+    LEFT(-1,0),
+    RIGHT(1,0);
+    private int x;
+    private int y;
 
-    Direction(int col, int row){
-        this.col = col;
-        this.row = row;
+    Direction(int x, int y){
+        this.x = x;
+        this.y = y;
     }
 
 
-    public int getCol() {
-        return col;
+    public int getX() {
+        return x;
     }
 
-    public int getRow() {
-        return row;
+    public int getY() {
+        return y;
     }
 
     public Direction randomDirection(){

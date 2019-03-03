@@ -35,27 +35,37 @@ public class CollisionDetector {
 
     private boolean checkGhostTop(Player player, Ghost[] ghosts) {
 
-        for (Ghost ghost : ghosts) {
+        for (int i = 0; i < ghosts.length; i++) {
+            if (ghosts[i].isDead()){
+                continue;
+            }
 
-            if (player.getY() <= ghost.getY() + ghost.getHeight() && player.getY() > ghost.getY()) {
+            if (player.getY() <= ghosts[i].getY() + ghosts[i].getHeight() && player.getY() > ghosts[i].getY()) {
 
-                if ((player.getX() > ghost.getX() &&
-                        player.getX() < ghost.getX() + ghost.getWidth()) ||
-                        (player.getX() + player.getWidth() > ghost.getX() &&
-                                player.getX() + player.getWidth() < ghost.getX() + ghost.getWidth())) {
-                    System.out.println("up");
+                if ((player.getX() > ghosts[i].getX() &&
+                        player.getX() < ghosts[i].getX() + ghosts[i].getWidth()) ||
+                        (player.getX() + player.getWidth() > ghosts[i].getX() &&
+                                player.getX() + player.getWidth() < ghosts[i].getX() + ghosts[i].getWidth())) {
+
+                    if (ghosts[i].getDirection() == player.getDirection()) {
+                        ghosts[i].die();
+                        return false;
+                    }
                     return true;
                 }
             }
 
-        }
 
+        }
         return false;
     }
 
     private boolean checkGhostBottom(Player player, Ghost[] ghosts) {
 
         for (Ghost ghost : ghosts) {
+            if (ghost.isDead()){
+                continue;
+            }
 
             if (player.getY() + player.getHeight() >= ghost.getY() &&
                     player.getY() + player.getHeight() < ghost.getY() + ghost.getHeight()) {
@@ -63,11 +73,13 @@ public class CollisionDetector {
                 if (player.getX() > ghost.getX() && player.getX() < ghost.getX() + ghost.getWidth() ||
                         player.getX() + player.getWidth() > ghost.getX() &&
                                 player.getX() + player.getWidth() < ghost.getX() + ghost.getWidth()) {
-                    System.out.println("bottom");
-
+                    if (ghost.getDirection() == player.getDirection()) {
+                        ghost.die();
+                        return false;
+                    }
                     return true;
-
                 }
+
 
             }
 
@@ -76,13 +88,20 @@ public class CollisionDetector {
         return false;
     }
 
+
     private boolean checkGhostRight(Player player, Ghost[] ghosts) {
         for (Ghost ghost : ghosts) {
-            if (player.getX() + player.getWidth() >= ghost.getX() && player.getX() < ghost.getX()+ghost.getWidth()) {
+            if (ghost.isDead()){
+                continue;
+            }
+            if (player.getX() + player.getWidth() >= ghost.getX() && player.getX() < ghost.getX() + ghost.getWidth()) {
                 if (player.getY() < ghost.getY() && player.getY() > ghost.getY() + ghost.getHeight() ||
                         player.getY() + player.getHeight() < ghost.getY() &&
                                 player.getY() + player.getHeight() > ghost.getY() + player.getHeight()) {
-                    System.out.println("right");
+                    if (ghost.getDirection() == player.getDirection()) {
+                        ghost.die();
+                        return false;
+                    }
                     return true;
                 }
 
@@ -95,11 +114,17 @@ public class CollisionDetector {
 
     private boolean checkGhostLeft(Player player, Ghost[] ghosts) {
         for (Ghost ghost : ghosts) {
-            if (player.getX() <= ghost.getX() + ghost.getWidth() && player.getX() > ghost.getX() ) {
+            if (ghost.isDead()){
+                continue;
+            }
+            if (player.getX() <= ghost.getX() + ghost.getWidth() && player.getX() > ghost.getX()) {
                 if ((player.getY() < ghost.getY() + ghost.getHeight() && player.getY() > ghost.getY()) ||
                         player.getY() + player.getHeight() > ghost.getY() &&
                                 player.getY() + player.getHeight() < ghost.getY() + ghost.getHeight()) {
-                    System.out.println("left");
+                    if (ghost.getDirection() == player.getDirection()) {
+                        ghost.die();
+                        return false;
+                    }
                     return true;
                 }
             }
@@ -121,6 +146,7 @@ public class CollisionDetector {
                         gameObject.getX() < walls[i].getX() + walls[i].getWidth()) ||
                         (gameObject.getX() + gameObject.getWidth() > walls[i].getX() &&
                                 gameObject.getX() + gameObject.getWidth() < walls[i].getX() + walls[i].getWidth())) {
+
                     return true;
                 }
             }

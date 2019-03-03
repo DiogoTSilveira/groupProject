@@ -1,7 +1,6 @@
 package org.academiadecodigo.groupproject.pacman.gameobjects;
 
 import org.academiadecodigo.groupproject.pacman.Direction;
-import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Ellipse;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
@@ -26,10 +25,10 @@ public class Player extends GameObject {
         player = (Ellipse) super.shape;
         player.draw();
         right = new Picture(310, 330, "resources/Pacman/RIGHT.png");
-        picture = right;
         down = new Picture(310, 330, "resources/Pacman/DOWN.png");
         up = new Picture(310, 330, "resources/Pacman/UP.png");
         left = new Picture(310, 330, "resources/Pacman/Left.png");
+        picture = right;
         picture.draw();
     }
 
@@ -75,22 +74,22 @@ public class Player extends GameObject {
             return;
         }
 
-        player.translate(direction.getCol(), direction.getRow());
-        picture.translate(direction.getCol(), direction.getRow());
+        player.translate(direction.getX() * 2, direction.getY() * 2);
+        picture.translate(direction.getX() * 2, direction.getY() * 2);
         if (collisionDetector.checkCollisionWithWalls(this)) {
-            player.translate(-direction.getCol(), -direction.getRow());
-            picture.translate(-direction.getCol(), -direction.getRow());
+            player.translate(-direction.getX() * 2, -direction.getY() * 2);
+            picture.translate(-direction.getX() * 2, -direction.getY() * 2);
             return;
         }
     }
 
-    private void translatePicture(Picture picture){
+    private void translatePicture(Picture picture) {
         int initialXPosition = picture.getX();
         int initialYPosition = picture.getY();
-        picture.translate(player.getX() - initialXPosition-4, player.getY() - initialYPosition-4);
+        picture.translate(player.getX() - initialXPosition - 4, player.getY() - initialYPosition - 4);
     }
 
-    private void newPicture(Picture picture){
+    private void newPicture(Picture picture) {
         this.picture.delete();
         translatePicture(picture);
         this.picture = picture;

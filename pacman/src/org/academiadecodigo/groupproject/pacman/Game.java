@@ -100,7 +100,7 @@ public class Game {
                 continue;
             }
 
-            Thread.sleep(30);
+            Thread.sleep(20);
             player.move();
             if (collisionDetector.checkCollisionWithGhosts(player, ghost)) {
 
@@ -118,8 +118,8 @@ public class Game {
     }
 
     public void moveGhosts() {
-        for (int i = 0; i < ghost.length; i++) {
-            ghost[i].move();
+        for (Ghost ghost: ghost) {
+            ghost.move();
         }
     }
 }
