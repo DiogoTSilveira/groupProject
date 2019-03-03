@@ -14,6 +14,7 @@ public class Player extends GameObject {
     private CollisionDetector collisionDetector;
     private Direction direction;
     private Picture picture;
+    private Picture down;
     private Picture up;
     private Picture left;
     private Picture right;
@@ -25,9 +26,13 @@ public class Player extends GameObject {
         this.collisionDetector = collisionDetector;
         player = (Ellipse) super.shape;
         player.draw();
-        //picture = new Picture(300 + 10 , 320 + 10, "resources/Pacman/RIGHT.png");
+        right = new Picture(player.getX(), player.getY(), "resources/Pacman/RIGHT.png");
+        picture = right;
+        down = new Picture(player.getX(), player.getY(), "resources/Pacman/DOWN.png");
+        up = new Picture(player.getX(), player.getY(), "resources/Pacman/UP.png");
+        left = new Picture(player.getX(), player.getY(), "resources/Pacman/Left.png");
 
-        //picture.draw();
+        picture.draw();
     }
 
 
@@ -51,8 +56,13 @@ public class Player extends GameObject {
 
 
                 //picture.delete();
-                //picture = new Picture(player.getX(), player.getY(), "resources/Pacman/UP.png");
-                //picture.draw();
+                int initialXUpPosition = up.getX();
+                int initialYUpPosition = up.getY();
+
+                up.translate(player.getX() - initialXUpPosition, player.getY() - initialYUpPosition);
+                picture = up;
+
+                picture.draw();
 
                 break;
 
@@ -62,8 +72,12 @@ public class Player extends GameObject {
                 this.direction = Direction.DOWN;
 
                 //picture.delete();
-                //picture = new Picture(player.getX(), player.getY(), "resources/Pacman/DOWN.png");
-                //picture.draw();
+                int initialXDownPosition = down.getX();
+                int initialYDownPosition = down.getY();
+
+                down.translate(player.getX() - initialXDownPosition, player.getY() - initialYDownPosition);
+                picture = down;
+                picture.draw();
 
                 break;
 
@@ -73,8 +87,12 @@ public class Player extends GameObject {
                 this.direction = Direction.RIGHT;
 
                 //picture.delete();
-                //picture = new Picture(player.getX(), player.getY(), "resources/Pacman/RIGHT.png");
-                //picture.draw();
+                int initialXRightPosition = right.getX();
+                int initialYRightPosition = right.getY();
+                right.translate(player.getX() - initialXRightPosition, player.getY() - initialYRightPosition);
+                picture = right;
+                picture.draw();
+
 
                 break;
 
@@ -84,8 +102,11 @@ public class Player extends GameObject {
                 this.direction = Direction.LEFT;
 
                 //picture.delete();
-                //picture = new Picture(player.getX(), player.getY(), "resources/Pacman/Left.png");
-                //picture.draw();
+                int initialXLeftPosition = left.getX();
+                int initialYLeftPosition = left.getY();
+                left.translate(player.getX() - initialXLeftPosition, player.getY() - initialYLeftPosition);
+                picture = left;
+                picture.draw();
 
                 break;
 
@@ -98,17 +119,17 @@ public class Player extends GameObject {
         if (direction == null) {
 
             player.translate(0, 0);
-            //picture.translate(0, 0);
+            picture.translate(0, 0);
 
             return;
 
         }
         player.translate(direction.getCol(), direction.getRow());
-        //picture.translate(direction.getCol(), direction.getRow());
+        picture.translate(direction.getCol(), direction.getRow());
 
         if (collisionDetector.checkCollisionWithWalls(this)) {
             player.translate(-direction.getCol(), -direction.getRow());
-            //picture.translate(-direction.getCol(), -direction.getRow());
+            picture.translate(-direction.getCol(), -direction.getRow());
             return;
         }
 
@@ -121,5 +142,7 @@ public class Player extends GameObject {
 
     public int getRow() {
         return direction.getRow();
+
     }
+
 }
