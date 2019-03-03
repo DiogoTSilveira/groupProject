@@ -106,11 +106,11 @@ public class Player extends GameObject {
     private void translatePicture(Picture picture){
         int initialXPosition = picture.getX();
         int initialYPosition = picture.getY();
-        picture.translate(player.getX() - initialXPosition, player.getY() - initialYPosition);
+        picture.translate(player.getX() - initialXPosition-4, player.getY() - initialYPosition-4);
 
     }
     private void newPicture(Picture picture){
-        this.picture.delete();
+        //this.picture.delete();
         translatePicture(picture);
         this.picture = picture;
         this.picture.draw();
