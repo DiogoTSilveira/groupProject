@@ -74,9 +74,12 @@ public class Game {
             Thread.sleep(30);
             player.move();
             if (collisionDetector.checkCollisionWithGhosts(player, ghost)) {
+
                 //This is causing a IIOException: Can't read input file
+
                 //Picture gameOver = new Picture(20,20, "resources/gameover.png");
                 //gameOver.draw();
+
                 break;
             }
             moveGhosts();
