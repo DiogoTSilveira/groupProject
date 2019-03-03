@@ -37,15 +37,15 @@ public class CollisionDetector {
 
         for (Ghost ghost : ghosts) {
 
-            if (player.getY() == ghost.getY() + ghost.getHeight()) {
+            if (player.getY() <= ghost.getY() + ghost.getHeight() && player.getY() > ghost.getY()) {
 
-                if ((player.getX() > ghost.getX()
-                        && player.getX() < ghost.getX() + ghost.getWidth())
-                        || (player.getX() + player.getWidth() > ghost.getX()
-                        && player.getX() + player.getWidth() < ghost.getX() + ghost.getWidth())) {
+                if ((player.getX() > ghost.getX() &&
+                        player.getX() < ghost.getX() + ghost.getWidth()) ||
+                        (player.getX() + player.getWidth() > ghost.getX() &&
+                                player.getX() + player.getWidth() < ghost.getX() + ghost.getWidth())) {
+                    System.out.println("up");
                     return true;
                 }
-                return false;
             }
 
         }
@@ -57,17 +57,18 @@ public class CollisionDetector {
 
         for (Ghost ghost : ghosts) {
 
-            if (player.getY() + player.getHeight() == ghost.getY()) {
+            if (player.getY() + player.getHeight() >= ghost.getY() &&
+                    player.getY() + player.getHeight() < ghost.getY() + ghost.getHeight()) {
 
                 if (player.getX() > ghost.getX() && player.getX() < ghost.getX() + ghost.getWidth() ||
                         player.getX() + player.getWidth() > ghost.getX() &&
                                 player.getX() + player.getWidth() < ghost.getX() + ghost.getWidth()) {
+                    System.out.println("bottom");
 
                     return true;
 
                 }
 
-                return false;
             }
 
         }
@@ -77,28 +78,30 @@ public class CollisionDetector {
 
     private boolean checkGhostRight(Player player, Ghost[] ghosts) {
         for (Ghost ghost : ghosts) {
-
-            if (player.getX() + player.getWidth() == ghost.getX()) {
-                if ((player.getY() + player.getHeight() > ghost.getY() &&
-                        player.getY() + player.getHeight() < ghost.getY() + ghost.getHeight()) ||
-                        player.getY() < ghost.getY() + ghost.getHeight() && player.getY() > ghost.getY()) {
+            if (player.getX() + player.getWidth() >= ghost.getX() && player.getX() < ghost.getX()+ghost.getWidth()) {
+                if (player.getY() < ghost.getY() && player.getY() > ghost.getY() + ghost.getHeight() ||
+                        player.getY() + player.getHeight() < ghost.getY() &&
+                                player.getY() + player.getHeight() > ghost.getY() + player.getHeight()) {
+                    System.out.println("right");
                     return true;
                 }
-                return false;
+
             }
+
+
         }
         return false;
     }
 
     private boolean checkGhostLeft(Player player, Ghost[] ghosts) {
         for (Ghost ghost : ghosts) {
-            if (player.getX() == ghost.getX() + ghost.getWidth()) {
+            if (player.getX() <= ghost.getX() + ghost.getWidth() && player.getX() > ghost.getX() ) {
                 if ((player.getY() < ghost.getY() + ghost.getHeight() && player.getY() > ghost.getY()) ||
                         player.getY() + player.getHeight() > ghost.getY() &&
                                 player.getY() + player.getHeight() < ghost.getY() + ghost.getHeight()) {
+                    System.out.println("left");
                     return true;
                 }
-                return false;
             }
         }
         return false;
@@ -114,10 +117,10 @@ public class CollisionDetector {
             int wallBottom = walls[i].getY() + walls[i].getHeight();
             if (yPlayer == wallBottom) {
 
-                if ((gameObject.getX() > walls[i].getX()
-                        && gameObject.getX() < walls[i].getX() + walls[i].getWidth())
-                        || (gameObject.getX() + gameObject.getWidth() > walls[i].getX()
-                        && gameObject.getX() + gameObject.getWidth() < walls[i].getX() + walls[i].getWidth())) {
+                if ((gameObject.getX() > walls[i].getX() &&
+                        gameObject.getX() < walls[i].getX() + walls[i].getWidth()) ||
+                        (gameObject.getX() + gameObject.getWidth() > walls[i].getX() &&
+                                gameObject.getX() + gameObject.getWidth() < walls[i].getX() + walls[i].getWidth())) {
                     return true;
                 }
             }

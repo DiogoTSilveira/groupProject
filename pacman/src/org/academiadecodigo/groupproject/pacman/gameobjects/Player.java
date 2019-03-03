@@ -18,7 +18,6 @@ public class Player extends GameObject {
     private Picture up;
     private Picture left;
     private Picture right;
-
     private Ellipse player;
 
     public Player(CollisionDetector collisionDetector) {
@@ -31,10 +30,8 @@ public class Player extends GameObject {
         down = new Picture(310, 330, "resources/Pacman/DOWN.png");
         up = new Picture(310, 330, "resources/Pacman/UP.png");
         left = new Picture(310, 330, "resources/Pacman/Left.png");
-
         picture.draw();
     }
-
 
     public Direction getDirection() {
         return direction;
@@ -68,49 +65,33 @@ public class Player extends GameObject {
                 this.direction = Direction.LEFT;
                 newPicture(left);
                 break;
-
         }
     }
 
     public void move() {
-
-
         if (direction == null) {
-
             player.translate(0, 0);
             picture.translate(0, 0);
-
             return;
-
         }
+
         player.translate(direction.getCol(), direction.getRow());
         picture.translate(direction.getCol(), direction.getRow());
-
         if (collisionDetector.checkCollisionWithWalls(this)) {
             player.translate(-direction.getCol(), -direction.getRow());
             picture.translate(-direction.getCol(), -direction.getRow());
             return;
         }
-
-
     }
 
-    public int getCol() {
-        return direction.getCol();
-    }
-
-    public int getRow() {
-        return direction.getRow();
-
-    }
     private void translatePicture(Picture picture){
         int initialXPosition = picture.getX();
         int initialYPosition = picture.getY();
         picture.translate(player.getX() - initialXPosition-4, player.getY() - initialYPosition-4);
-
     }
+
     private void newPicture(Picture picture){
-        //this.picture.delete();
+        this.picture.delete();
         translatePicture(picture);
         this.picture = picture;
         this.picture.draw();

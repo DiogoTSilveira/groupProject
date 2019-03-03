@@ -54,7 +54,7 @@ public class Game {
     }
 
     private void createBackgroundAndField() {
-        Picture background = new Picture(PADDING, PADDING, "resources/oie_0AT68Uz38HJQ.jpg");
+        Picture background = new Picture(PADDING, PADDING, "resources/Background/oie_0AT68Uz38HJQ.jpg");
         background.draw();
 
         Rectangle field = new Rectangle(6 * cellSize + PADDING, 10 * cellSize + PADDING, 48 * cellSize, 40 * cellSize);
@@ -72,12 +72,12 @@ public class Game {
         keyboardListener = new KeyboardListener(player);
 
 
-        Ghost ghost = new Ghost(264 + 10, collisionDetector);
-        Ghost ghost1 = new Ghost(294, collisionDetector);
-        Ghost ghost2 = new Ghost(314, collisionDetector);
-        Ghost ghost3 = new Ghost(334, collisionDetector);
-        Ghost ghost4 = new Ghost(354, collisionDetector);
-        Ghost ghost5 = new Ghost(374, collisionDetector);
+        Ghost ghost = new Ghost(264 + 10, collisionDetector, "resources/mcs/chapeu jojo.png");
+        Ghost ghost1 = new Ghost(294, collisionDetector, "resources/mcs/chapeu nuno.png");
+        Ghost ghost2 = new Ghost(314, collisionDetector, "resources/mcs/chapeu ruben.png" );
+        Ghost ghost3 = new Ghost(334, collisionDetector, "resources/mcs/chapeu rudy.png");
+        Ghost ghost4 = new Ghost(354, collisionDetector, "resources/mcs/chapeu seringa.png");
+        Ghost ghost5 = new Ghost(374, collisionDetector, "resources/mcs/chapeu xico.png");
         this.ghost = new Ghost[]{ghost, ghost1, ghost2, ghost3, ghost4, ghost5};
     }
 
@@ -106,8 +106,8 @@ public class Game {
 
                 //This is causing a IIOException: Can't read input file
 
-                //Picture gameOver = new Picture(20,20, "resources/gameover.png");
-                //gameOver.draw();
+     //           Picture gameOver = new Picture(20,20, "resources/gameover.png");
+       //         gameOver.draw();
 
                 break;
             }

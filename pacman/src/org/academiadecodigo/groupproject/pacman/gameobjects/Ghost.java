@@ -22,20 +22,20 @@ public class Ghost extends GameObject {
     private int col;
     private int row;
 
-    public Ghost(int x, CollisionDetector collisionDetector) {
+    public Ghost(int x, CollisionDetector collisionDetector, String string) {
         super(new Ellipse(x, 274 + 10, 12, 12), null);
         this.collisionDetector = collisionDetector;
         ghost = (Ellipse) super.shape;
         ghost.setColor(Color.GREEN);
+        this.picture = new Picture(x, 280, string );
 
-        // Picture picture = new Picture(x, 280, "resources/Webp.net-resizeimage.png");
-        //picture.draw();
-        ghost.fill();
+        this.picture.draw();
+        //ghost.fill();
     }
 
 
     /**
-     * The Ghost will get a random direction from Direction. This Ghost will not be able to change direction
+      * The Ghost will get a random direction from Direction. This Ghost will not be able to change direction
      * until he faces an obstacle ahead of him. Uppon hitting a wall for example, the Ghost will not return from where he came.
      */
     public void move() {
@@ -50,12 +50,14 @@ public class Ghost extends GameObject {
         }
 
         ghost.translate(direction.getCol(), direction.getRow());
+        picture.translate(direction.getCol(), direction.getRow());
 
 
         //}
 
         if (collisionDetector.checkCollisionWithWalls(this)) {
             ghost.translate(-direction.getCol(), -direction.getRow());
+            picture.translate(-direction.getCol(), -direction.getRow());
             move();
             return;
         }
