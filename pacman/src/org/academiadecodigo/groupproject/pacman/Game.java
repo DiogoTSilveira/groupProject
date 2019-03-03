@@ -53,7 +53,7 @@ public class Game {
         keyboardListener = new KeyboardListener(player);
 
 
-        Ghost ghost = new Ghost(264 +10, collisionDetector);
+        Ghost ghost = new Ghost(264 + 10, collisionDetector);
         Ghost ghost1 = new Ghost(294, collisionDetector);
         Ghost ghost2 = new Ghost(314, collisionDetector);
         Ghost ghost3 = new Ghost(334, collisionDetector);
@@ -73,11 +73,14 @@ public class Game {
 
             Thread.sleep(30);
             player.move();
-            //ghost.setDirection();
-            moveGhosts();
-            if(collisionDetector.checkCollisionWithGhosts(player, ghost)){
+            if (collisionDetector.checkCollisionWithGhosts(player, ghost)) {
+                //This is causing a IIOException: Can't read input file
+                //Picture gameOver = new Picture(20,20, "resources/gameover.png");
+                //gameOver.draw();
                 break;
             }
+            moveGhosts();
+
         }
 
     }

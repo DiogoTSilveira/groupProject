@@ -1,9 +1,6 @@
 package org.academiadecodigo.groupproject.pacman.gameobjects;
 
 
-import org.academiadecodigo.groupproject.pacman.Game;
-import org.academiadecodigo.simplegraphics.graphics.Ellipse;
-import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.graphics.Shape;
 
 /**
@@ -12,11 +9,6 @@ import org.academiadecodigo.simplegraphics.graphics.Shape;
 
 public class CollisionDetector {
 
-    protected int playerX;
-    protected int playerY;
-
-    protected int ghostX;
-    protected int ghostY;
     private Shape[] walls;
 
     public CollisionDetector() {
@@ -26,31 +18,94 @@ public class CollisionDetector {
         this.walls = walls;
     }
 
-    public void setPlayerPosition(int x, int y) {
-        playerX = x;
-        playerY = y;
-    }
-
-    public void setGhostPosition(int x, int y) {
-        ghostX = x;
-        ghostY = y;
-    }
-
     public boolean checkCollisionWithWalls(GameObject gameObject) {
-        return (checkCollisionUp(gameObject) ||
-                checkCollisionDown(gameObject) ||
-                checkCollisionRight(gameObject) ||
-                checkCollisionLeft(gameObject));
+        return (checkTop(gameObject) ||
+                checknBottom(gameObject) ||
+                checkRight(gameObject) ||
+                checkLeft(gameObject));
 
     }
 
     public boolean checkCollisionWithGhosts(Player player, Ghost[] ghosts) {
+        return (checkGhostTop(player, ghosts) ||
+                checkGhostBottom(player, ghosts) ||
+                checkGhostRight(player, ghosts) ||
+                checkGhostLeft(player, ghosts));
+    }
+
+    private boolean checkGhostTop(Player player, Ghost[] ghosts) {
+
+        for (Ghost ghost : ghosts) {
+
+            if (player.getY() == ghost.getY() + ghost.getHeight()) {
+
+                if ((player.getX() > ghost.getX()
+                        && player.getX() < ghost.getX() + ghost.getWidth())
+                        || (player.getX() + player.getWidth() > ghost.getX()
+                        && player.getX() + player.getWidth() < ghost.getX() + ghost.getWidth())) {
+                    return true;
+                }
+                return false;
+            }
+
+        }
 
         return false;
     }
 
+    private boolean checkGhostBottom(Player player, Ghost[] ghosts) {
 
-    private boolean checkCollisionUp(GameObject gameObject) {
+        for (Ghost ghost : ghosts) {
+
+            if (player.getY() + player.getHeight() == ghost.getY()) {
+
+                if (player.getX() > ghost.getX() && player.getX() < ghost.getX() + ghost.getWidth() ||
+                        player.getX() + player.getWidth() > ghost.getX() &&
+                                player.getX() + player.getWidth() < ghost.getX() + ghost.getWidth()) {
+
+                    return true;
+
+                }
+
+                return false;
+            }
+
+        }
+
+        return false;
+    }
+
+    private boolean checkGhostRight(Player player, Ghost[] ghosts) {
+        for (Ghost ghost : ghosts) {
+
+            if (player.getX() + player.getWidth() == ghost.getX()) {
+                if ((player.getY() + player.getHeight() > ghost.getY() &&
+                        player.getY() + player.getHeight() < ghost.getY() + ghost.getHeight()) ||
+                        player.getY() < ghost.getY() + ghost.getHeight() && player.getY() > ghost.getY()) {
+                    return true;
+                }
+                return false;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkGhostLeft(Player player, Ghost[] ghosts) {
+        for (Ghost ghost : ghosts) {
+            if (player.getX() == ghost.getX() + ghost.getWidth()) {
+                if ((player.getY() < ghost.getY() + ghost.getHeight() && player.getY() > ghost.getY()) ||
+                        player.getY() + player.getHeight() > ghost.getY() &&
+                                player.getY() + player.getHeight() < ghost.getY() + ghost.getHeight()) {
+                    return true;
+                }
+                return false;
+            }
+        }
+        return false;
+    }
+
+
+    private boolean checkTop(GameObject gameObject) {
 
         int yPlayer = gameObject.getY();
 
@@ -60,8 +115,9 @@ public class CollisionDetector {
             if (yPlayer == wallBottom) {
 
                 if ((gameObject.getX() > walls[i].getX()
-                        && gameObject.getX() < walls[i].getX() + walls[i].getWidth()) || (gameObject.getX() + gameObject.getWidth() > walls[i].getX() &&
-                        gameObject.getX() + gameObject.getWidth() < walls[i].getX() + walls[i].getWidth())) {
+                        && gameObject.getX() < walls[i].getX() + walls[i].getWidth())
+                        || (gameObject.getX() + gameObject.getWidth() > walls[i].getX()
+                        && gameObject.getX() + gameObject.getWidth() < walls[i].getX() + walls[i].getWidth())) {
                     return true;
                 }
             }
@@ -70,7 +126,7 @@ public class CollisionDetector {
     }
 
 
-    private boolean checkCollisionDown(GameObject gameObject) {
+    private boolean checknBottom(GameObject gameObject) {
         for (int i = 0; i < walls.length; i++) {
             if (gameObject.getY() + gameObject.getHeight() == walls[i].getY()) {
 
@@ -90,7 +146,7 @@ public class CollisionDetector {
     }
 
 
-    private boolean checkCollisionRight(GameObject gameObject) {
+    private boolean checkRight(GameObject gameObject) {
         for (int i = 0; i < walls.length; i++) {
 
             if (gameObject.getX() + gameObject.getWidth() == walls[i].getX()) {
@@ -107,7 +163,7 @@ public class CollisionDetector {
     }
 
 
-    private boolean checkCollisionLeft(GameObject gameObject) {
+    private boolean checkLeft(GameObject gameObject) {
         for (int i = 0; i < walls.length; i++) {
 
             if (gameObject.getX() == walls[i].getX() + walls[i].getWidth()) {

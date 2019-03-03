@@ -24,11 +24,12 @@ public class Player extends GameObject {
         super(new Ellipse(304 + 10, 324 + 10, 12, 12), null);
         this.collisionDetector = collisionDetector;
         player = (Ellipse) super.shape;
-        //player.draw();
-        picture = new Picture(300 + 10 , 320 + 10, "resources/Pacman/RIGHT.png");
+        player.draw();
+        //picture = new Picture(300 + 10 , 320 + 10, "resources/Pacman/RIGHT.png");
 
-        picture.draw();
+        //picture.draw();
     }
+
 
     public Direction getDirection() {
         return direction;
@@ -49,9 +50,9 @@ public class Player extends GameObject {
                 this.direction = Direction.UP;
 
 
-                picture.delete();
-                picture = new Picture(player.getX(), player.getY(), "resources/Pacman/UP.png");
-                picture.draw();
+                //picture.delete();
+                //picture = new Picture(player.getX(), player.getY(), "resources/Pacman/UP.png");
+                //picture.draw();
 
                 break;
 
@@ -60,9 +61,9 @@ public class Player extends GameObject {
                 player.setColor(Color.YELLOW);
                 this.direction = Direction.DOWN;
 
-                picture.delete();
-                picture = new Picture(player.getX(), player.getY(), "resources/Pacman/DOWN.png");
-                picture.draw();
+                //picture.delete();
+                //picture = new Picture(player.getX(), player.getY(), "resources/Pacman/DOWN.png");
+                //picture.draw();
 
                 break;
 
@@ -71,9 +72,9 @@ public class Player extends GameObject {
                 player.setColor(Color.BLACK);
                 this.direction = Direction.RIGHT;
 
-                picture.delete();
-                picture = new Picture(player.getX(), player.getY(), "resources/Pacman/RIGHT.png");
-                picture.draw();
+                //picture.delete();
+                //picture = new Picture(player.getX(), player.getY(), "resources/Pacman/RIGHT.png");
+                //picture.draw();
 
                 break;
 
@@ -82,9 +83,9 @@ public class Player extends GameObject {
                 player.setColor(Color.CYAN);
                 this.direction = Direction.LEFT;
 
-                picture.delete();
-                picture = new Picture(player.getX(), player.getY(), "resources/Pacman/LEFT.png");
-                picture.draw();
+                //picture.delete();
+                //picture = new Picture(player.getX(), player.getY(), "resources/Pacman/Left.png");
+                //picture.draw();
 
                 break;
 
@@ -97,17 +98,17 @@ public class Player extends GameObject {
         if (direction == null) {
 
             player.translate(0, 0);
-            picture.translate(0, 0);
+            //picture.translate(0, 0);
 
             return;
 
         }
         player.translate(direction.getCol(), direction.getRow());
-        picture.translate(direction.getCol(), direction.getRow());
+        //picture.translate(direction.getCol(), direction.getRow());
 
         if (collisionDetector.checkCollisionWithWalls(this)) {
             player.translate(-direction.getCol(), -direction.getRow());
-            picture.translate(-direction.getCol(), -direction.getRow());
+            //picture.translate(-direction.getCol(), -direction.getRow());
             return;
         }
 

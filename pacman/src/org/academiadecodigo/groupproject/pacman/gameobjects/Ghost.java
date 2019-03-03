@@ -28,8 +28,8 @@ public class Ghost extends GameObject {
         ghost = (Ellipse) super.shape;
         ghost.setColor(Color.GREEN);
 
-        Picture picture = new Picture(x, 280, "resources/Webp.net-resizeimage.png");
-        picture.draw();
+        // Picture picture = new Picture(x, 280, "resources/Webp.net-resizeimage.png");
+        //picture.draw();
         ghost.fill();
     }
 
@@ -48,20 +48,13 @@ public class Ghost extends GameObject {
         if(Math.random() < 0.01) {
             direction = direction.randomDirection();
         }
-        //if (collisionDetector.checkCollisionWithWalls(this)) {
-        //  this.direction = direction.changeDirection();
-        //ghost.translate(direction.getCol(), direction.getRow());
-        //if (collisionDetector.checkCollisionWithWalls(this)) {
-        //  ghost.translate(-direction.getCol(), -direction.getRow());
-        //this.direction = direction.getOpposite();
-        //}else return;
+
         ghost.translate(direction.getCol(), direction.getRow());
 
 
         //}
 
         if (collisionDetector.checkCollisionWithWalls(this)) {
-            System.out.println("collision");
             ghost.translate(-direction.getCol(), -direction.getRow());
             move();
             return;
