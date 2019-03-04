@@ -12,7 +12,7 @@ public class WallFactory {
 
     private Rectangle walls;
     private final static int CELL_SIZE = 10;
-    private final static int PADDING = 10;
+    private final static int PADDING = 0;
 
 
     public static Shape[] createGameField() {

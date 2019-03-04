@@ -8,14 +8,14 @@ import org.academiadecodigo.groupproject.pacman.gameobjects.CollisionDetector;
 import org.academiadecodigo.groupproject.pacman.gameobjects.Ghost;
 import org.academiadecodigo.groupproject.pacman.gameobjects.Player;
 import org.academiadecodigo.groupproject.pacman.gameobjects.WallFactory;
-import org.academiadecodigo.groupproject.pacman.keyboard.KeyboardListener;
+import org.academiadecodigo.groupproject.pacman.peripherals.*;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Game {
 
-    public static final int PADDING = 10;
+    public static final int PADDING = 0;
     private Picture background;
     private int cols;
     private int rows;
@@ -59,7 +59,6 @@ public class Game {
         gameName = new Picture(50, 50, "resources/mcsHunter.png");
         menu = new Picture(PADDING, PADDING, "resources/Background/Screen Shot 2019-03-04 at 18.58.33.png");
 
-        WallFactory.createGameField();
         menu.draw();
         gameName.draw();
 
@@ -81,12 +80,12 @@ public class Game {
         keyboardListener = new KeyboardListener(player);
 
 
-        Ghost ghost = new Ghost(262 + 10, collisionDetector, "resources/mcs/chapeu jojo.png");
-        Ghost ghost1 = new Ghost(292, collisionDetector, "resources/mcs/chapeu nuno.png");
-        Ghost ghost2 = new Ghost(312, collisionDetector, "resources/mcs/chapeu ruben.png");
-        Ghost ghost3 = new Ghost(332, collisionDetector, "resources/mcs/chapeu rudy.png");
-        Ghost ghost4 = new Ghost(352, collisionDetector, "resources/mcs/chapeu seringa.png");
-        Ghost ghost5 = new Ghost(372, collisionDetector, "resources/mcs/chapeu xico.png");
+        Ghost ghost = new Ghost(262 , collisionDetector, "resources/mcs/chapeu jojo.png");
+        Ghost ghost1 = new Ghost(282, collisionDetector, "resources/mcs/chapeu nuno.png");
+        Ghost ghost2 = new Ghost(302, collisionDetector, "resources/mcs/chapeu ruben.png");
+        Ghost ghost3 = new Ghost(322, collisionDetector, "resources/mcs/chapeu rudy.png");
+        Ghost ghost4 = new Ghost(342, collisionDetector, "resources/mcs/chapeu seringa.png");
+        Ghost ghost5 = new Ghost(362, collisionDetector, "resources/mcs/chapeu xico.png");
         this.ghost = new Ghost[]{ghost, ghost1, ghost2, ghost3, ghost4, ghost5};
     }
 

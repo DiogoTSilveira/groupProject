@@ -23,7 +23,7 @@ public class Player extends GameObject {
     private Direction nextDirection;
 
     public Player(CollisionDetector collisionDetector) {
-        super(new Ellipse(304 + 10, 324 + 10, 12, 12), null);
+        super(new Ellipse(304, 324, 12, 12), null);
         this.collisionDetector = collisionDetector;
         player = (Ellipse) super.shape;
         right = new Picture(310, 330, "resources/Pacman/RIGHT.png");
