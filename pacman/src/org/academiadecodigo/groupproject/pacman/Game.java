@@ -12,18 +12,15 @@ import org.academiadecodigo.groupproject.pacman.keyboard.KeyboardListener;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
-import org.academiadecodigo.groupproject.pacman.*;
 
 public class Game {
 
+    public static final int PADDING = 10;
     private Picture background;
     private Rectangle rectangle;
-
     private int cols;
     private int rows;
     private int cellSize;
-    public static final int PADDING = 10;
-
     private Player player;
     private Ghost[] ghost;
     private CollisionDetector collisionDetector;
@@ -51,7 +48,7 @@ public class Game {
 
     }
 
-    private void menu(){
+    private void menu() {
 
         background = new Picture(PADDING, PADDING, "resources/Background/oie_0AT68Uz38HJQ.jpg");
         background.draw();
@@ -101,6 +98,7 @@ public class Game {
 
     protected void start() throws InterruptedException {
         Sound wakawaka = new Sound("/resources/sound/wakawaka.wav");
+        Sound theme = new Sound("/resources/sound/uka ukachaka.wav");
 
         while (true) {
 
@@ -108,17 +106,17 @@ public class Game {
                 continue;
             }
 
-            Thread.sleep(30);
+            Thread.sleep(50);
             player.move();
-
+            theme.setLoop(-1);
             if (collisionDetector.checkCollisionWithGhosts(player, ghost)) {
-
+                theme.close();
 
                 Sound over = new Sound("/resources/sound/summarizersound.wav");
                 over.play(true);
 
                 Picture gameOver = new Picture(200, 200, "resources/Texts/gameover.png");
-                gameOver.grow(100,100);
+                gameOver.grow(100, 100);
                 gameOver.draw();
 
                 break;
@@ -129,7 +127,7 @@ public class Game {
 
     }
 
-    public void moveGhosts() {
+    public void moveGhosts() throws InterruptedException {
         for (Ghost ghost : ghost) {
             ghost.move();
         }

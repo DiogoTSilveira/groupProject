@@ -67,7 +67,7 @@ public class Player extends GameObject {
         }
     }
 
-    public void move() {
+    public void move() throws InterruptedException {
         if (direction == null) {
             player.translate(0, 0);
             picture.translate(0, 0);
@@ -76,6 +76,8 @@ public class Player extends GameObject {
 
         player.translate(direction.getX() * 2, direction.getY() * 2);
         picture.translate(direction.getX() * 2, direction.getY() * 2);
+        //Thread.sleep(1);
+
         if (collisionDetector.checkCollisionWithWalls(this)) {
             player.translate(-direction.getX() * 2, -direction.getY() * 2);
             picture.translate(-direction.getX() * 2, -direction.getY() * 2);
