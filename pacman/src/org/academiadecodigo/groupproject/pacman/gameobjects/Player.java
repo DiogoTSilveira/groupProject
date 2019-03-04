@@ -69,26 +69,24 @@ public class Player extends GameObject {
 
     public void move() throws InterruptedException {
         if (direction == null) {
-            player.translate(0, 0);
-            picture.translate(0, 0);
             return;
         }
         tryDirection();
-        player.translate(direction.getX() * 2, direction.getY() * 2);
-        picture.translate(direction.getX() * 2, direction.getY() * 2);
+        translate(direction);
 
         if (collisionDetector.checkCollisionWithWalls(this)) {
-            player.translate(-direction.getX() * 2, -direction.getY() * 2);
-            picture.translate(-direction.getX() * 2, -direction.getY() * 2);
+            translateBack(direction);
+
             if (picture == null || oldPicture == null) {
                 return;
             }
             direction = oldDirection;
             newPicture(oldPicture);
+
             return;
         }
         oldPicture = picture;
-        newPicture(getPicture(direction.name()));
+        newPicture(getPicture(direction));
         oldDirection = direction;
     }
 
@@ -108,30 +106,30 @@ public class Player extends GameObject {
 
     }
 
-    private Picture getPicture(String picture) {
-        if (picture == "UP") {
-            return up;
+    private Picture getPicture(Direction direction) {
+        switch (direction) {
+            case RIGHT:
+                return right;
+            case UP:
+                return up;
+            case DOWN:
+                return down;
+            case LEFT:
+                return left;
         }
-        if (picture == "DOWN") {
-            return down;
-        }
-        if (picture == "LEFT") {
-            return left;
-        }
-        return right;
-
+        return null;
     }
 
     private boolean tryDirection() {
-        player.translate(nextDirection.getX() * 2, nextDirection.getY() * 2);
+        translate(nextDirection);
 
         if (collisionDetector.checkCollisionWithWalls(this)) {
-            player.translate(-nextDirection.getX() * 2, -nextDirection.getY() * 2);
+            translateBack(nextDirection);
             return false;
         }
-        player.translate(-nextDirection.getX() * 2, -nextDirection.getY() * 2);
+        translateBack(nextDirection);
         if (direction != nextDirection) {
-            player.translate(direction.getX() * 2, direction.getY() * 2);
+            translate(direction);
         }
         direction = nextDirection;
         return true;
@@ -143,6 +141,18 @@ public class Player extends GameObject {
             return 2;
         }
         return 1;
+    }
+
+    private void translate(Direction direction) {
+        player.translate(direction.getX() * 2, direction.getY() * 2);
+        picture.translate(direction.getX() * 2, direction.getY() * 2);
+
+    }
+
+    private void translateBack(Direction direction) {
+        player.translate(-direction.getX() * 2, -direction.getY() * 2);
+        picture.translate(-direction.getX() * 2, -direction.getY() * 2);
+
     }
 
 

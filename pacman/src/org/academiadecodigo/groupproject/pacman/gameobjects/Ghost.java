@@ -23,14 +23,12 @@ public class Ghost extends GameObject {
     private int row;
 
     public Ghost(int x, CollisionDetector collisionDetector, String string) {
-        super(new Ellipse(x, 274 + 10, 12, 12), null);
+        super(new Ellipse(x, 272 + 10, 16, 16), null);
         this.collisionDetector = collisionDetector;
         ghost = (Ellipse) super.shape;
-        ghost.setColor(Color.GREEN);
         this.picture = new Picture(x, 280, string);
 
         this.picture.draw();
-        //ghost.fill();
     }
 
 

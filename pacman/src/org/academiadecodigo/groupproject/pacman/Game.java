@@ -17,7 +17,6 @@ public class Game {
 
     public static final int PADDING = 10;
     private Picture background;
-    private Rectangle rectangle;
     private int cols;
     private int rows;
     private int cellSize;
@@ -25,7 +24,9 @@ public class Game {
     private Ghost[] ghost;
     private CollisionDetector collisionDetector;
     private KeyboardListener keyboardListener;
-
+    private Picture restart;
+    private Picture gameName;
+    private Picture menu;
 
     public Game(int cols, int rows) {
         this.cols = cols;
@@ -49,13 +50,18 @@ public class Game {
     }
 
     private void menu() {
-
         background = new Picture(PADDING, PADDING, "resources/Background/oie_0AT68Uz38HJQ.jpg");
         background.draw();
-
+        restart = new Picture(120 + PADDING, 420 + PADDING, "resources/restart.png");
         createBackgroundAndField();
         initializeCollisionDetector();
         initializeGameEntities();
+        gameName = new Picture(50, 50, "resources/mcsHunter.png");
+        menu = new Picture(PADDING, PADDING, "resources/Background/Screen Shot 2019-03-04 at 18.58.33.png");
+
+        WallFactory.createGameField();
+        menu.draw();
+        gameName.draw();
 
     }
 
@@ -75,12 +81,12 @@ public class Game {
         keyboardListener = new KeyboardListener(player);
 
 
-        Ghost ghost = new Ghost(264 + 10, collisionDetector, "resources/mcs/chapeu jojo.png");
-        Ghost ghost1 = new Ghost(294, collisionDetector, "resources/mcs/chapeu nuno.png");
-        Ghost ghost2 = new Ghost(314, collisionDetector, "resources/mcs/chapeu ruben.png");
-        Ghost ghost3 = new Ghost(334, collisionDetector, "resources/mcs/chapeu rudy.png");
-        Ghost ghost4 = new Ghost(354, collisionDetector, "resources/mcs/chapeu seringa.png");
-        Ghost ghost5 = new Ghost(374, collisionDetector, "resources/mcs/chapeu xico.png");
+        Ghost ghost = new Ghost(262 + 10, collisionDetector, "resources/mcs/chapeu jojo.png");
+        Ghost ghost1 = new Ghost(292, collisionDetector, "resources/mcs/chapeu nuno.png");
+        Ghost ghost2 = new Ghost(312, collisionDetector, "resources/mcs/chapeu ruben.png");
+        Ghost ghost3 = new Ghost(332, collisionDetector, "resources/mcs/chapeu rudy.png");
+        Ghost ghost4 = new Ghost(352, collisionDetector, "resources/mcs/chapeu seringa.png");
+        Ghost ghost5 = new Ghost(372, collisionDetector, "resources/mcs/chapeu xico.png");
         this.ghost = new Ghost[]{ghost, ghost1, ghost2, ghost3, ghost4, ghost5};
     }
 
@@ -97,6 +103,7 @@ public class Game {
      */
 
     protected void start() throws InterruptedException {
+
         Sound wakawaka = new Sound("/resources/sound/wakawaka.wav");
         Sound theme = new Sound("/resources/sound/uka ukachaka.wav");
 
@@ -106,7 +113,13 @@ public class Game {
                 continue;
             }
 
+            menu.delete();
+            gameName.delete();
+
+
             Thread.sleep(50);
+         //   wait(10000);
+
             player.move();
             theme.setLoop(-1);
             if (collisionDetector.checkCollisionWithGhosts(player, ghost)) {
@@ -118,12 +131,12 @@ public class Game {
                 Picture gameOver = new Picture(200, 200, "resources/Texts/gameover.png");
                 gameOver.grow(100, 100);
                 gameOver.draw();
-
                 break;
             }
             moveGhosts();
 
         }
+        restart.draw();
 
     }
 
@@ -132,4 +145,10 @@ public class Game {
             ghost.move();
         }
     }
+
+    public void restart() throws InterruptedException {
+        restart.delete();
+        start();
+    }
+
 }
