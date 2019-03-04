@@ -1,6 +1,7 @@
 package org.academiadecodigo.groupproject.pacman.peripherals;
 
 import org.academiadecodigo.groupproject.pacman.Direction;
+import org.academiadecodigo.groupproject.pacman.Game;
 import org.academiadecodigo.groupproject.pacman.gameobjects.Player;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
@@ -15,6 +16,7 @@ public class KeyboardListener implements KeyboardHandler {
      */
 
     private Player player;
+    private Game game;
 
     Keyboard keyboard;
 
@@ -26,7 +28,8 @@ public class KeyboardListener implements KeyboardHandler {
     KeyboardEvent space = new KeyboardEvent();
     KeyboardEvent r = new KeyboardEvent();
 
-    public KeyboardListener(Player player) {
+    public KeyboardListener(Player player, Game game) {
+        this.game = game;
         this.player = player;
 
         //Creating a peripherals to be able to move our shape.
@@ -109,7 +112,6 @@ public class KeyboardListener implements KeyboardHandler {
                 break;
 
             case KeyboardEvent.KEY_R:
-
                 break;
         }
 

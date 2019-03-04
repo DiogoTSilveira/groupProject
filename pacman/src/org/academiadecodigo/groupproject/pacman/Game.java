@@ -8,7 +8,7 @@ import org.academiadecodigo.groupproject.pacman.gameobjects.CollisionDetector;
 import org.academiadecodigo.groupproject.pacman.gameobjects.Ghost;
 import org.academiadecodigo.groupproject.pacman.gameobjects.Player;
 import org.academiadecodigo.groupproject.pacman.gameobjects.WallFactory;
-import org.academiadecodigo.groupproject.pacman.peripherals.*;
+import org.academiadecodigo.groupproject.pacman.peripherals.KeyboardListener;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
@@ -27,6 +27,8 @@ public class Game {
     private Picture restart;
     private Picture gameName;
     private Picture menu;
+    private Picture pacmanRunning;
+    private Picture mcsRunning;
 
     public Game(int cols, int rows) {
         this.cols = cols;
@@ -58,9 +60,11 @@ public class Game {
         initializeGameEntities();
         gameName = new Picture(50, 50, "resources/mcsHunter.png");
         menu = new Picture(PADDING, PADDING, "resources/Background/Screen Shot 2019-03-04 at 18.58.33.png");
-
+        pacmanRunning = new Picture(600, 520, "resources/pacman running.png");
+        mcsRunning = new Picture(-400, 520, "resources/pacman eating.png");
         menu.draw();
         gameName.draw();
+        pacmanRunning.draw();
 
     }
 
@@ -77,10 +81,10 @@ public class Game {
 
     private void initializeGameEntities() {
         player = new Player(collisionDetector);
-        keyboardListener = new KeyboardListener(player);
+        keyboardListener = new KeyboardListener(player, this);
 
 
-        Ghost ghost = new Ghost(262 , collisionDetector, "resources/mcs/chapeu jojo.png");
+        Ghost ghost = new Ghost(262, collisionDetector, "resources/mcs/chapeu jojo.png");
         Ghost ghost1 = new Ghost(282, collisionDetector, "resources/mcs/chapeu nuno.png");
         Ghost ghost2 = new Ghost(302, collisionDetector, "resources/mcs/chapeu ruben.png");
         Ghost ghost3 = new Ghost(322, collisionDetector, "resources/mcs/chapeu rudy.png");
@@ -107,17 +111,29 @@ public class Game {
         Sound theme = new Sound("/resources/sound/uka ukachaka.wav");
 
         while (true) {
+            Thread.sleep(50);
+
+
+            if (mcsRunning.getX() < 640) {
+                mcsRunning.translate(5, 0);
+                mcsRunning.draw();
+            } else if (pacmanRunning.getX() + pacmanRunning.getWidth() > -10) {
+                pacmanRunning.translate(-5, 0);
+            } else {
+
+                mcsRunning.translate(-400 - mcsRunning.getX(), 520 - mcsRunning.getY());
+                pacmanRunning.translate(600 - pacmanRunning.getX(), 520 - pacmanRunning.getY());
+
+            }
 
             if (player.getDirection() == null) {
                 continue;
             }
-
+            mcsRunning.delete();
+            pacmanRunning.delete();
             menu.delete();
             gameName.delete();
 
-
-            Thread.sleep(50);
-         //   wait(10000);
 
             player.move();
             theme.setLoop(-1);
@@ -136,18 +152,13 @@ public class Game {
 
         }
         restart.draw();
-
     }
 
-    public void moveGhosts() throws InterruptedException {
+    public void moveGhosts() {
         for (Ghost ghost : ghost) {
             ghost.move();
         }
     }
 
-    public void restart() throws InterruptedException {
-        restart.delete();
-        start();
-    }
 
 }

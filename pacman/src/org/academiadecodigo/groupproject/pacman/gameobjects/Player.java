@@ -26,10 +26,10 @@ public class Player extends GameObject {
         super(new Ellipse(304, 324, 12, 12), null);
         this.collisionDetector = collisionDetector;
         player = (Ellipse) super.shape;
-        right = new Picture(310, 330, "resources/Pacman/RIGHT.png");
-        down = new Picture(310, 330, "resources/Pacman/DOWN.png");
-        up = new Picture(310, 330, "resources/Pacman/UP.png");
-        left = new Picture(310, 330, "resources/Pacman/Left.png");
+        right = new Picture(300, 320, "resources/Pacman/RIGHT.png");
+        down = new Picture(300, 320, "resources/Pacman/DOWN.png");
+        up = new Picture(300, 320, "resources/Pacman/UP.png");
+        left = new Picture(300, 320, "resources/Pacman/Left.png");
         picture = right;
         picture.draw();
     }
@@ -67,7 +67,7 @@ public class Player extends GameObject {
         }
     }
 
-    public void move() throws InterruptedException {
+    public void move() {
         if (direction == null) {
             return;
         }

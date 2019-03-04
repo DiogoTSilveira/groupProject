@@ -3,7 +3,6 @@ package org.academiadecodigo.groupproject.pacman.gameobjects;
 //import org.academiadecodigo.groupproject.pacman.CollisionDetector;
 
 import org.academiadecodigo.groupproject.pacman.Direction;
-import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Ellipse;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
@@ -19,14 +18,18 @@ public class Ghost extends GameObject {
     private Picture picture;
     private Ellipse ghost;
     private boolean dead;
-    private int col;
-    private int row;
+    private int initialX;
+    private int initialY;
+    private int initialPicPosition;
 
     public Ghost(int x, CollisionDetector collisionDetector, String string) {
         super(new Ellipse(x, 272 + 10, 16, 16), null);
-        this.collisionDetector = collisionDetector;
         ghost = (Ellipse) super.shape;
-        this.picture = new Picture(x, 280, string);
+        initialX = ghost.getX();
+        initialY = ghost.getY();
+        this.collisionDetector = collisionDetector;
+        this.picture = new Picture(x + 2, 280, string);
+        initialPicPosition = picture.getX();
 
         this.picture.draw();
     }
@@ -36,7 +39,7 @@ public class Ghost extends GameObject {
      * The Ghost will get a random direction from Direction. This Ghost will not be able to change direction
      * until he faces an obstacle ahead of him. Uppon hitting a wall for example, the Ghost will not return from where he came.
      */
-    public void move() throws InterruptedException{
+    public void move() {
 
         if (direction == null) {
             direction = Direction.UP;
@@ -47,7 +50,6 @@ public class Ghost extends GameObject {
             direction = direction.randomDirection();
         }
 
-        //Thread.sleep(1);
         ghost.translate(direction.getX(), direction.getY());
         picture.translate(direction.getX(), direction.getY());
 
@@ -55,7 +57,7 @@ public class Ghost extends GameObject {
             ghost.translate(-direction.getX(), -direction.getY());
             picture.translate(-direction.getX(), -direction.getY());
             direction = direction.changeDirection();
-            while (collisionDetector.checkCollisionWithWalls(this)){
+            while (collisionDetector.checkCollisionWithWalls(this)) {
                 ghost.translate(direction.getX(), direction.getY());
                 picture.translate(direction.getX(), direction.getY());
             }
@@ -68,7 +70,7 @@ public class Ghost extends GameObject {
         return super.getDirection();
     }
 
-    public void die(){
+    public void die() {
         direction = null;
         picture.delete();
         dead = true;
