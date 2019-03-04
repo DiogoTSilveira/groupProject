@@ -16,6 +16,7 @@ import org.academiadecodigo.groupproject.pacman.*;
 
 public class Game {
 
+    private Picture background;
     private Rectangle rectangle;
 
     private int cols;
@@ -46,6 +47,15 @@ public class Game {
         //rectangle.fill();
         //Picture picture = new Picture( PADDING, PADDING,"resources/Pacman/Webp.net-resizeimage.jpg");
 
+        menu();
+
+    }
+
+    private void menu(){
+
+        background = new Picture(PADDING, PADDING, "resources/Background/oie_0AT68Uz38HJQ.jpg");
+        background.draw();
+
         createBackgroundAndField();
         initializeCollisionDetector();
         initializeGameEntities();
@@ -53,15 +63,12 @@ public class Game {
     }
 
     private void createBackgroundAndField() {
-        Picture background = new Picture(PADDING, PADDING, "pacman/resources/Background/oie_0AT68Uz38HJQ.jpg");
-        background.draw();
-
         Rectangle field = new Rectangle(6 * cellSize + PADDING, 10 * cellSize + PADDING, 48 * cellSize, 40 * cellSize);
         field.setColor(new Color(41, 191, 161));
         field.fill();
     }
 
-    public void initializeCollisionDetector() {
+    private void initializeCollisionDetector() {
         collisionDetector = new CollisionDetector();
         collisionDetector.setWalls(WallFactory.createGameField());
     }
@@ -71,12 +78,12 @@ public class Game {
         keyboardListener = new KeyboardListener(player);
 
 
-        Ghost ghost = new Ghost(264 + 10, collisionDetector, "pacman/resources/mcs/chapeu jojo.png");
-        Ghost ghost1 = new Ghost(294, collisionDetector, "pacman/resources/mcs/chapeu nuno.png");
-        Ghost ghost2 = new Ghost(314, collisionDetector, "pacman/resources/mcs/chapeu ruben.png");
-        Ghost ghost3 = new Ghost(334, collisionDetector, "pacman/resources/mcs/chapeu rudy.png");
-        Ghost ghost4 = new Ghost(354, collisionDetector, "pacman/resources/mcs/chapeu seringa.png");
-        Ghost ghost5 = new Ghost(374, collisionDetector, "pacman/resources/mcs/chapeu xico.png");
+        Ghost ghost = new Ghost(264 + 10, collisionDetector, "resources/mcs/chapeu jojo.png");
+        Ghost ghost1 = new Ghost(294, collisionDetector, "resources/mcs/chapeu nuno.png");
+        Ghost ghost2 = new Ghost(314, collisionDetector, "resources/mcs/chapeu ruben.png");
+        Ghost ghost3 = new Ghost(334, collisionDetector, "resources/mcs/chapeu rudy.png");
+        Ghost ghost4 = new Ghost(354, collisionDetector, "resources/mcs/chapeu seringa.png");
+        Ghost ghost5 = new Ghost(374, collisionDetector, "resources/mcs/chapeu xico.png");
         this.ghost = new Ghost[]{ghost, ghost1, ghost2, ghost3, ghost4, ghost5};
     }
 
@@ -92,27 +99,25 @@ public class Game {
      *                              move.
      */
 
-    public void start() throws InterruptedException {
-        Sound wakawaka = new Sound("/pacman/resources/sound/wakawaka.wav");
-        wakawaka.setLoop(-1);
+    protected void start() throws InterruptedException {
+        Sound wakawaka = new Sound("/resources/sound/wakawaka.wav");
+
         while (true) {
 
             if (player.getDirection() == null) {
-                wakawaka.stop();
                 continue;
             }
 
-            Thread.sleep(20);
+            Thread.sleep(30);
             player.move();
 
             if (collisionDetector.checkCollisionWithGhosts(player, ghost)) {
 
-                wakawaka.stop();
 
-                Sound over = new Sound("/pacman/resources/sound/summarizersound.wav");
+                Sound over = new Sound("/resources/sound/summarizersound.wav");
                 over.play(true);
 
-                Picture gameOver = new Picture(200, 200, "pacman/resources/Texts/gameover.png");
+                Picture gameOver = new Picture(200, 200, "resources/Texts/gameover.png");
                 gameOver.grow(100,100);
                 gameOver.draw();
 
