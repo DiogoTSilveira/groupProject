@@ -149,6 +149,9 @@ public class Game {
             player.move();
             backgroundTheme.setLoop(-1);
             if (win()){
+                Picture winPicture = new Picture(60, 60, "resources/you-win-png-1.png" );
+                winPicture.draw();
+
                 backgroundTheme.stop();
                 win.setLoop(-1);
             }
