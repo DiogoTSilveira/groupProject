@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
-<project name="First Try" default="jarfile">
+<project name="MCs Hunter" default="jarfile">
 
     <target name="init" description="Initializes properties">
-        <property name="project.name" value="First Try" />
+        <property name="project.name" value="MCs Hunter" />
         <property name="src.dir" value="src" />
         <property name="main.class" value="org.academiadecodigo.groupproject.pacman.Main" />
         <property name="build.dir" value="build" />
