@@ -2,6 +2,7 @@ package org.academiadecodigo.groupproject.pacman.gameobjects;
 
 
 import org.academiadecodigo.simplegraphics.graphics.Shape;
+import org.academiadecodigo.groupproject.pacman.Sound;
 
 /**
  * Ze Diogo
@@ -10,6 +11,7 @@ import org.academiadecodigo.simplegraphics.graphics.Shape;
 public class CollisionDetector {
 
     private Shape[] walls;
+    private Sound ping;
 
     public CollisionDetector() {
     }
@@ -48,6 +50,10 @@ public class CollisionDetector {
                                 player.getX() + player.getWidth() < ghosts[i].getX() + ghosts[i].getWidth())) {
 
                     if (ghosts[i].getDirection() == player.getDirection()) {
+
+                        ping = new Sound("/resources/sound/ping.wav");
+                        ping.play(true);
+
                         ghosts[i].die();
                         return false;
                     }
@@ -74,6 +80,10 @@ public class CollisionDetector {
                         player.getX() + player.getWidth() > ghost.getX() &&
                                 player.getX() + player.getWidth() < ghost.getX() + ghost.getWidth()) {
                     if (ghost.getDirection() == player.getDirection()) {
+
+                        ping = new Sound("/resources/sound/ping.wav");
+                        ping.play(true);
+
                         ghost.die();
                         return false;
                     }
@@ -99,6 +109,10 @@ public class CollisionDetector {
                         player.getY() + player.getHeight() < ghost.getY() &&
                                 player.getY() + player.getHeight() > ghost.getY() + player.getHeight()) {
                     if (ghost.getDirection() == player.getDirection()) {
+
+                        ping = new Sound("/resources/sound/ping.wav");
+                        ping.play(true);
+
                         ghost.die();
                         return false;
                     }
@@ -122,6 +136,10 @@ public class CollisionDetector {
                         player.getY() + player.getHeight() > ghost.getY() &&
                                 player.getY() + player.getHeight() < ghost.getY() + ghost.getHeight()) {
                     if (ghost.getDirection() == player.getDirection()) {
+
+                        ping = new Sound("/resources/sound/ping.wav");
+                        ping.play(true);
+
                         ghost.die();
                         return false;
                     }

@@ -29,6 +29,7 @@ public class Game {
     private Picture menu;
     private Picture pacmanRunning;
     private Picture mcsRunning;
+    private Picture pressKeyToStart;
 
     public Game(int cols, int rows) {
         this.cols = cols;
@@ -55,16 +56,23 @@ public class Game {
         background = new Picture(PADDING, PADDING, "resources/Background/oie_0AT68Uz38HJQ.jpg");
         background.draw();
         restart = new Picture(120 + PADDING, 420 + PADDING, "resources/restart.png");
+
         createBackgroundAndField();
         initializeCollisionDetector();
         initializeGameEntities();
+
         gameName = new Picture(50, 50, "resources/mcsHunter.png");
         menu = new Picture(PADDING, PADDING, "resources/Background/Screen Shot 2019-03-04 at 18.58.33.png");
+
         pacmanRunning = new Picture(600, 520, "resources/pacman running.png");
         mcsRunning = new Picture(-400, 520, "resources/pacman eating.png");
+
+        pressKeyToStart = new Picture(130, 255, "resources/Texts/pressKey.png");
+
         menu.draw();
         gameName.draw();
         pacmanRunning.draw();
+        pressKeyToStart.draw();
 
     }
 
@@ -107,12 +115,14 @@ public class Game {
 
     protected void start() throws InterruptedException {
 
-        Sound wakawaka = new Sound("/resources/sound/wakawaka.wav");
-        Sound theme = new Sound("/resources/sound/uka ukachaka.wav");
+        Sound intro = new Sound("/resources/sound/Intro.wav");
+        Sound backgroundTheme = new Sound("/resources/sound/backgroundTheme.wav");
+        Sound win = new Sound("/resources/sound/win.wav");
 
+
+        intro.play(true);
         while (true) {
             Thread.sleep(50);
-
 
             if (mcsRunning.getX() < 640) {
                 mcsRunning.translate(5, 0);
@@ -129,16 +139,23 @@ public class Game {
             if (player.getDirection() == null) {
                 continue;
             }
+            pressKeyToStart.delete();
+            intro.stop();
             mcsRunning.delete();
             pacmanRunning.delete();
             menu.delete();
             gameName.delete();
 
-
             player.move();
-            theme.setLoop(-1);
+            backgroundTheme.setLoop(-1);
+            if (win()){
+                backgroundTheme.stop();
+                win.setLoop(-1);
+            }
+
             if (collisionDetector.checkCollisionWithGhosts(player, ghost)) {
-                theme.close();
+
+                backgroundTheme.stop();
 
                 Sound over = new Sound("/resources/sound/summarizersound.wav");
                 over.play(true);
@@ -151,7 +168,7 @@ public class Game {
             moveGhosts();
 
         }
-        restart.draw();
+       // restart.draw();
     }
 
     public void moveGhosts() {
@@ -160,5 +177,14 @@ public class Game {
         }
     }
 
+    private boolean win() {
+        for (Ghost ghost : ghost) {
+            if (!ghost.isDead()) {
+                return false;
+            }
 
+        }
+        return true;
+
+    }
 }
