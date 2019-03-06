@@ -1,8 +1,8 @@
 package org.academiadecodigo.groupproject.pacman.gameobjects;
 
 
-import org.academiadecodigo.simplegraphics.graphics.Shape;
 import org.academiadecodigo.groupproject.pacman.Sound;
+import org.academiadecodigo.simplegraphics.graphics.Shape;
 
 /**
  * Ze Diogo
@@ -22,7 +22,7 @@ public class CollisionDetector {
 
     public boolean checkCollisionWithWalls(GameObject gameObject) {
         return (checkTop(gameObject) ||
-                checknBottom(gameObject) ||
+                checkBottom(gameObject) ||
                 checkRight(gameObject) ||
                 checkLeft(gameObject));
 
@@ -37,27 +37,20 @@ public class CollisionDetector {
 
     private boolean checkGhostTop(Player player, Ghost[] ghosts) {
 
-        for (int i = 0; i < ghosts.length; i++) {
-            if (ghosts[i].isDead()){
+        for (Ghost ghost : ghosts) {
+            if (ghost.isDead()) {
                 continue;
             }
 
-            if (player.getY() <= ghosts[i].getY() + ghosts[i].getHeight() && player.getY() > ghosts[i].getY()) {
+            if (player.getY() <= ghost.getY() + ghost.getHeight() && player.getY() > ghost.getY()) {
 
-                if ((player.getX() > ghosts[i].getX() &&
-                        player.getX() < ghosts[i].getX() + ghosts[i].getWidth()) ||
-                        (player.getX() + player.getWidth() > ghosts[i].getX() &&
-                                player.getX() + player.getWidth() < ghosts[i].getX() + ghosts[i].getWidth())) {
+                if ((player.getX() >= ghost.getX() &&
+                        player.getX() <= ghost.getX() + ghost.getWidth()) ||
+                        (player.getX() + player.getWidth() >= ghost.getX() &&
+                                player.getX() + player.getWidth() <= ghost.getX() + ghost.getWidth())) {
+                    System.out.println("Kill");
 
-                    if (ghosts[i].getDirection() == player.getDirection()) {
-
-                        ping = new Sound("/resources/sound/ping.wav");
-                        ping.play(true);
-
-                        ghosts[i].die();
-                        return false;
-                    }
-                    return true;
+                    ghostDie(player, ghost);
                 }
             }
 
@@ -69,25 +62,18 @@ public class CollisionDetector {
     private boolean checkGhostBottom(Player player, Ghost[] ghosts) {
 
         for (Ghost ghost : ghosts) {
-            if (ghost.isDead()){
+            if (ghost.isDead()) {
                 continue;
             }
 
             if (player.getY() + player.getHeight() >= ghost.getY() &&
                     player.getY() + player.getHeight() < ghost.getY() + ghost.getHeight()) {
 
-                if (player.getX() > ghost.getX() && player.getX() < ghost.getX() + ghost.getWidth() ||
-                        player.getX() + player.getWidth() > ghost.getX() &&
-                                player.getX() + player.getWidth() < ghost.getX() + ghost.getWidth()) {
-                    if (ghost.getDirection() == player.getDirection()) {
-
-                        ping = new Sound("/resources/sound/ping.wav");
-                        ping.play(true);
-
-                        ghost.die();
-                        return false;
-                    }
-                    return true;
+                if (player.getX() >= ghost.getX() && player.getX() <= ghost.getX() + ghost.getWidth() ||
+                        player.getX() + player.getWidth() >= ghost.getX() &&
+                                player.getX() + player.getWidth() <= ghost.getX() + ghost.getWidth()) {
+                    System.out.println("Kill");
+                    return ghostDie(player, ghost);
                 }
 
 
@@ -101,22 +87,15 @@ public class CollisionDetector {
 
     private boolean checkGhostRight(Player player, Ghost[] ghosts) {
         for (Ghost ghost : ghosts) {
-            if (ghost.isDead()){
+            if (ghost.isDead()) {
                 continue;
             }
             if (player.getX() + player.getWidth() >= ghost.getX() && player.getX() < ghost.getX() + ghost.getWidth()) {
-                if (player.getY() < ghost.getY() && player.getY() > ghost.getY() + ghost.getHeight() ||
-                        player.getY() + player.getHeight() < ghost.getY() &&
-                                player.getY() + player.getHeight() > ghost.getY() + player.getHeight()) {
-                    if (ghost.getDirection() == player.getDirection()) {
-
-                        ping = new Sound("/resources/sound/ping.wav");
-                        ping.play(true);
-
-                        ghost.die();
-                        return false;
-                    }
-                    return true;
+                if (player.getY() <= ghost.getY() && player.getY() >= ghost.getY() + ghost.getHeight() ||
+                        player.getY() + player.getHeight() <= ghost.getY() &&
+                                player.getY() + player.getHeight() >= ghost.getY() + player.getHeight()) {
+                    System.out.println("Kill");
+                    return ghostDie(player, ghost);
                 }
 
             }
@@ -128,22 +107,16 @@ public class CollisionDetector {
 
     private boolean checkGhostLeft(Player player, Ghost[] ghosts) {
         for (Ghost ghost : ghosts) {
-            if (ghost.isDead()){
+            if (ghost.isDead()) {
                 continue;
             }
             if (player.getX() <= ghost.getX() + ghost.getWidth() && player.getX() > ghost.getX()) {
-                if ((player.getY() < ghost.getY() + ghost.getHeight() && player.getY() > ghost.getY()) ||
-                        player.getY() + player.getHeight() > ghost.getY() &&
-                                player.getY() + player.getHeight() < ghost.getY() + ghost.getHeight()) {
-                    if (ghost.getDirection() == player.getDirection()) {
+                if ((player.getY() <= ghost.getY() + ghost.getHeight() && player.getY() >= ghost.getY()) ||
+                        player.getY() + player.getHeight() >= ghost.getY() &&
+                                player.getY() + player.getHeight() <= ghost.getY() + ghost.getHeight()) {
+                    System.out.println("Kill");
+                    return ghostDie(player, ghost);
 
-                        ping = new Sound("/resources/sound/ping.wav");
-                        ping.play(true);
-
-                        ghost.die();
-                        return false;
-                    }
-                    return true;
                 }
             }
         }
@@ -158,12 +131,11 @@ public class CollisionDetector {
         for (int i = 0; i < walls.length; i++) {
 
             int wallBottom = walls[i].getY() + walls[i].getHeight();
-            if (yPlayer == wallBottom) {
+            if (yPlayer > wallBottom && gameObject.getY() < walls[i].getY()) {
+                System.out.println(yPlayer + " " + wallBottom);
 
-                if ((gameObject.getX() > walls[i].getX() &&
-                        gameObject.getX() < walls[i].getX() + walls[i].getWidth()) ||
-                        (gameObject.getX() + gameObject.getWidth() > walls[i].getX() &&
-                                gameObject.getX() + gameObject.getWidth() < walls[i].getX() + walls[i].getWidth())) {
+                if (checkVerticalCorner(gameObject, i)) {
+                    System.out.println("collision top");
 
                     return true;
                 }
@@ -173,13 +145,13 @@ public class CollisionDetector {
     }
 
 
-    private boolean checknBottom(GameObject gameObject) {
+    private boolean checkBottom(GameObject gameObject) {
         for (int i = 0; i < walls.length; i++) {
-            if (gameObject.getY() + gameObject.getHeight() == walls[i].getY()) {
+            if (gameObject.getY() + gameObject.getHeight() < walls[i].getY() &&
+                    gameObject.getY() + gameObject.getHeight() > walls[i].getY() + walls[i].getHeight()) {
 
-                if (gameObject.getX() > walls[i].getX() && gameObject.getX() < walls[i].getX() + walls[i].getWidth() ||
-                        gameObject.getX() + gameObject.getWidth() > walls[i].getX() &&
-                                gameObject.getX() + gameObject.getWidth() < walls[i].getX() + walls[i].getWidth()) {
+                if (checkVerticalCorner(gameObject, i)) {
+                    System.out.println("collision down");
 
                     return true;
 
@@ -196,10 +168,9 @@ public class CollisionDetector {
     private boolean checkRight(GameObject gameObject) {
         for (int i = 0; i < walls.length; i++) {
 
-            if (gameObject.getX() + gameObject.getWidth() == walls[i].getX()) {
-                if ((gameObject.getY() + gameObject.getHeight() > walls[i].getY() &&
-                        gameObject.getY() + gameObject.getHeight() < walls[i].getY() + walls[i].getHeight()) ||
-                        gameObject.getY() < walls[i].getY() + walls[i].getHeight() && gameObject.getY() > walls[i].getY()) {
+            if (gameObject.getX() + gameObject.getWidth() > walls[i].getX() &&
+                    gameObject.getX() + gameObject.getWidth() < walls[i].getX() + walls[i].getWidth()) {
+                if (chekHorizontalCorner(gameObject, i)) {
                     return true;
                 }
 
@@ -213,10 +184,9 @@ public class CollisionDetector {
     private boolean checkLeft(GameObject gameObject) {
         for (int i = 0; i < walls.length; i++) {
 
-            if (gameObject.getX() == walls[i].getX() + walls[i].getWidth()) {
-                if ((gameObject.getY() < walls[i].getY() + walls[i].getHeight() && gameObject.getY() > walls[i].getY()) ||
-                        gameObject.getY() + gameObject.getHeight() > walls[i].getY() &&
-                                gameObject.getY() + gameObject.getHeight() < walls[i].getY() + walls[i].getHeight()) {
+            if (gameObject.getX() < walls[i].getX() + walls[i].getWidth() &&
+                    gameObject.getX() > walls[i].getX()) {
+                if (chekHorizontalCorner(gameObject, i)) {
                     return true;
                 }
             }
@@ -225,4 +195,34 @@ public class CollisionDetector {
         return false;
 
     }
+
+    private boolean checkVerticalCorner(GameObject gameObject, int i) {
+        return (gameObject.getX() > walls[i].getX() &&
+                gameObject.getX() < walls[i].getX() + walls[i].getWidth()) ||
+                (gameObject.getX() + gameObject.getWidth() > walls[i].getX() &&
+                        gameObject.getX() + gameObject.getWidth() < walls[i].getX() + walls[i].getWidth());
+    }
+
+    private boolean chekHorizontalCorner(GameObject gameObject, int i) {
+        return ((gameObject.getY() < walls[i].getY() + walls[i].getHeight() &&
+                gameObject.getY() > walls[i].getY()) ||
+                gameObject.getY() + gameObject.getHeight() > walls[i].getY() &&
+                        gameObject.getY() + gameObject.getHeight() < walls[i].getY() + walls[i].getHeight());
+    }
+
+    private boolean ghostDie(GameObject player, Ghost ghost) {
+        if (ghost.getDirection() == player.getDirection()) {
+
+            ping = new Sound("/resources/sound/ping.wav");
+            ping.play(true);
+            System.out.println("ghost die");
+            ghost.die();
+            return false;
+        }
+        System.out.println("error");
+        return true;
+
+
+    }
+
 }

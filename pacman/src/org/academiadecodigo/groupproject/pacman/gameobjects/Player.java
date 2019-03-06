@@ -1,7 +1,7 @@
 package org.academiadecodigo.groupproject.pacman.gameobjects;
 
 import org.academiadecodigo.groupproject.pacman.Direction;
-import org.academiadecodigo.simplegraphics.graphics.Ellipse;
+import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 /**
@@ -17,19 +17,22 @@ public class Player extends GameObject {
     private Picture up;
     private Picture left;
     private Picture right;
-    private Ellipse player;
+    private Rectangle player;
     private Direction oldDirection;
     private Picture oldPicture;
     private Direction nextDirection;
+    private boolean dash;
+    private int speed;
 
     public Player(CollisionDetector collisionDetector) {
-        super(new Ellipse(304, 324, 12, 12), null);
+        super(new Rectangle(301, 321, 18 , 18), null);
+        speed = 1;
         this.collisionDetector = collisionDetector;
-        player = (Ellipse) super.shape;
-        right = new Picture(300, 320, "resources/Pacman/RIGHT.png");
-        down = new Picture(300, 320, "resources/Pacman/DOWN.png");
-        up = new Picture(300, 320, "resources/Pacman/UP.png");
-        left = new Picture(300, 320, "resources/Pacman/Left.png");
+        player = (Rectangle) super.shape;
+        right = new Picture(301, 321, "resources/Pacman/RIGHT.png");
+        down = new Picture(301, 321, "resources/Pacman/DOWN.png");
+        up = new Picture(301, 321, "resources/Pacman/UP.png");
+        left = new Picture(301, 321, "resources/Pacman/Left.png");
         picture = right;
         picture.draw();
     }
@@ -77,13 +80,20 @@ public class Player extends GameObject {
         if (collisionDetector.checkCollisionWithWalls(this)) {
             translateBack(direction);
 
+
             if (picture == null || oldPicture == null) {
                 return;
             }
+            if (direction != oldDirection) {
+                translate(oldDirection);
+                if (collisionDetector.checkCollisionWithWalls(this)) {
+                    translateBack(oldDirection);
+                }
+            }
             direction = oldDirection;
             newPicture(oldPicture);
-
             return;
+
         }
         oldPicture = picture;
         newPicture(getPicture(direction));
@@ -93,7 +103,7 @@ public class Player extends GameObject {
     private void translatePicture(Picture picture) {
         int initialXPosition = picture.getX();
         int initialYPosition = picture.getY();
-        picture.translate(player.getX() - initialXPosition - 4, player.getY() - initialYPosition - 4);
+        picture.translate(player.getX() - initialXPosition , player.getY() - initialYPosition);
 
     }
 
@@ -120,27 +130,15 @@ public class Player extends GameObject {
         return null;
     }
 
-    private boolean tryDirection() {
+    private void tryDirection() {
         translate(nextDirection);
 
         if (collisionDetector.checkCollisionWithWalls(this)) {
             translateBack(nextDirection);
-            return false;
+            return;
         }
         translateBack(nextDirection);
-        if (direction != nextDirection) {
-            translate(direction);
-        }
         direction = nextDirection;
-        return true;
-
-    }
-
-    public int dash(Boolean isdash) {
-        if (isdash) {
-            return 2;
-        }
-        return 1;
     }
 
     private void translate(Direction direction) {
@@ -155,5 +153,13 @@ public class Player extends GameObject {
 
     }
 
+    public void hidePlayer() {
+        player.delete();
+    }
+
+    public boolean dash() {
+
+return false;
+    }
 
 }

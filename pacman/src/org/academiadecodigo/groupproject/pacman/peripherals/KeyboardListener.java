@@ -11,15 +11,7 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 
 public class KeyboardListener implements KeyboardHandler {
 
-    /**
-     * @Movable - uppon assigning our player to this KeyboardListener, this shape will become movable.
-     */
-
-    private Player player;
-    private Game game;
-
     Keyboard keyboard;
-
     //Setting our keys to control the player.
     KeyboardEvent up = new KeyboardEvent();
     KeyboardEvent down = new KeyboardEvent();
@@ -27,6 +19,13 @@ public class KeyboardListener implements KeyboardHandler {
     KeyboardEvent left = new KeyboardEvent();
     KeyboardEvent space = new KeyboardEvent();
     KeyboardEvent r = new KeyboardEvent();
+    KeyboardEvent p = new KeyboardEvent();
+    /**
+     * @Movable - uppon assigning our player to this KeyboardListener, this shape will become movable.
+     */
+
+    private Player player;
+    private Game game;
 
     public KeyboardListener(Player player, Game game) {
         this.game = game;
@@ -48,9 +47,10 @@ public class KeyboardListener implements KeyboardHandler {
         down.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         right.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         left.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        p.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
 
         space.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-        space.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+//        space.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
 
         r.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
 
@@ -66,6 +66,7 @@ public class KeyboardListener implements KeyboardHandler {
         space.setKey(KeyboardEvent.KEY_SPACE);
 
         r.setKey(KeyboardEvent.KEY_R);
+        p.setKey(KeyboardEvent.KEY_P);
 
 
     }
@@ -80,6 +81,7 @@ public class KeyboardListener implements KeyboardHandler {
         keyboard.addEventListener(space);
 
         keyboard.addEventListener(r);
+        keyboard.addEventListener(p);
 
     }
 
@@ -90,28 +92,53 @@ public class KeyboardListener implements KeyboardHandler {
 
             case KeyboardEvent.KEY_UP:
 
+                if (game.isPause()) {
+                    break;
+                }
                 player.setDirection(Direction.UP);
                 break;
 
             case KeyboardEvent.KEY_DOWN:
+                if (game.isPause()) {
+                    break;
+                }
 
                 player.setDirection(Direction.DOWN);
                 break;
 
             case KeyboardEvent.KEY_RIGHT:
+                if (game.isPause()) {
+                    break;
+                }
 
                 player.setDirection(Direction.RIGHT);
                 break;
 
             case KeyboardEvent.KEY_LEFT:
+                if (game.isPause()) {
+                    break;
+                }
+                System.out.println("left");
 
                 player.setDirection(Direction.LEFT);
                 break;
 
             case KeyboardEvent.KEY_SPACE:
+                if (game.isPause()) {
+                    break;
+                }
+                player.move();
+                System.out.println("space");
                 break;
 
             case KeyboardEvent.KEY_R:
+                if (game.isPause()) {
+                    break;
+                }
+                break;
+
+            case KeyboardEvent.KEY_P:
+                game.setPause();
                 break;
         }
 
@@ -121,11 +148,11 @@ public class KeyboardListener implements KeyboardHandler {
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
 
-        switch (keyboardEvent.getKey()) {
+        /*switch (keyboardEvent.getKey()) {
 
             case KeyboardEvent.KEY_SPACE:
-
+                player.move();
                 break;
-        }
+        }*/
     }
 }

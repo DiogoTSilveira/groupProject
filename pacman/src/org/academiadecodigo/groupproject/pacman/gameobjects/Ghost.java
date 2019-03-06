@@ -23,9 +23,9 @@ public class Ghost extends GameObject {
     private int initialPicPosition;
 
     public Ghost(int x, CollisionDetector collisionDetector, String string) {
-        super(new Ellipse(x, 272 + 10, 16, 16), null);
+        super(new Ellipse(x, 271 + 10, 18, 18), null);
         ghost = (Ellipse) super.shape;
-        this.picture = new Picture(x + 2, 280, string);
+        this.picture = new Picture(x + 1, 280, string);
 
         initialX = ghost.getX();
         initialY = ghost.getY();

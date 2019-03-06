@@ -15,25 +15,21 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Game {
 
-    public static final int PADDING = 0;
-    private Picture background;
-    private int cols;
-    private int rows;
+    private static final int PADDING = 0;
     private int cellSize;
     private Player player;
     private Ghost[] ghost;
     private CollisionDetector collisionDetector;
-    private KeyboardListener keyboardListener;
-    private Picture restart;
     private Picture gameName;
     private Picture menu;
     private Picture pacmanRunning;
     private Picture mcsRunning;
     private Picture pressKeyToStart;
+    private boolean pause;
+    private Picture pauseText;
 
-    public Game(int cols, int rows) {
-        this.cols = cols;
-        this.rows = rows;
+
+    public Game() {
         cellSize = 10;
     }
 
@@ -53,10 +49,9 @@ public class Game {
     }
 
     private void menu() {
-        background = new Picture(PADDING, PADDING, "resources/Background/oie_0AT68Uz38HJQ.jpg");
+        Picture background = new Picture(PADDING, PADDING, "resources/Background/oie_0AT68Uz38HJQ.jpg");
+        pauseText = new Picture(200, 30, "resources/Texts/pause.png" );
         background.draw();
-        restart = new Picture(120 + PADDING, 420 + PADDING, "resources/restart.png");
-
         createBackgroundAndField();
         initializeCollisionDetector();
         initializeGameEntities();
@@ -89,7 +84,7 @@ public class Game {
 
     private void initializeGameEntities() {
         player = new Player(collisionDetector);
-        keyboardListener = new KeyboardListener(player, this);
+        new KeyboardListener(player, this);
 
 
         Ghost ghost = new Ghost(262, collisionDetector, "resources/mcs/chapeu jojo.png");
@@ -116,13 +111,16 @@ public class Game {
     protected void start() throws InterruptedException {
 
         Sound intro = new Sound("/resources/sound/Intro.wav");
-        Sound backgroundTheme = new Sound("/resources/sound/backgroundTheme.wav");
+        Sound background = new Sound("/resources/sound/backgroundTheme.wav");
         Sound win = new Sound("/resources/sound/win.wav");
 
 
         intro.play(true);
         while (true) {
-            Thread.sleep(50);
+            Thread.sleep(30);
+            if(pause){
+                continue;
+            }
 
             if (mcsRunning.getX() < 640) {
                 mcsRunning.translate(5, 0);
@@ -147,18 +145,18 @@ public class Game {
             gameName.delete();
 
             player.move();
-            backgroundTheme.setLoop(-1);
-            if (win()){
-                Picture winPicture = new Picture(60, 60, "resources/you-win-png-1.png" );
+            background.setLoop(-1);
+            if (win()) {
+                Picture winPicture = new Picture(60, 60, "resources/you-win-png-1.png");
                 winPicture.draw();
-
-                backgroundTheme.stop();
-                win.setLoop(-1);
+                player.hidePlayer();
+                background.stop();
+                 win.setLoop(-1);
             }
 
             if (collisionDetector.checkCollisionWithGhosts(player, ghost)) {
 
-                backgroundTheme.stop();
+                background.stop();
 
                 Sound over = new Sound("/resources/sound/summarizersound.wav");
                 over.play(true);
@@ -171,10 +169,10 @@ public class Game {
             moveGhosts();
 
         }
-       // restart.draw();
+        // restart.draw();
     }
 
-    public void moveGhosts() {
+    private void moveGhosts() {
         for (Ghost ghost : ghost) {
             ghost.move();
         }
@@ -188,6 +186,19 @@ public class Game {
 
         }
         return true;
+    }
 
+    public boolean isPause() {
+        return pause;
+    }
+
+    public void setPause() {
+        if (pause) {
+            pause = false;
+            pauseText.delete();
+        return;
+        }
+        pause = true;
+        pauseText.draw();
     }
 }
